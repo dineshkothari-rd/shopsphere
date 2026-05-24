@@ -1,6 +1,8 @@
 import {
   addDoc,
   collection,
+  doc,
+  getDoc,
   getDocs,
   orderBy,
   query,
@@ -27,4 +29,15 @@ export const getProducts = async () => {
     id: doc.id,
     ...doc.data(),
   }));
+};
+
+export const getSingleProduct = async (productId) => {
+  const productRef = doc(db, "products", productId);
+
+  const snapshot = await getDoc(productRef);
+
+  return {
+    id: snapshot.id,
+    ...snapshot.data(),
+  };
 };
