@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { googleLogin, registerUser } from "@/services/firebase/authMethods";
+import { toast } from "sonner";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -34,8 +35,7 @@ const RegisterPage = () => {
 
       navigate("/");
     } catch (error) {
-      console.log(error);
-      alert(error.message);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,7 @@ const RegisterPage = () => {
 
       navigate("/");
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
 

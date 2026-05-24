@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { addProduct } from "@/services/firebase/productMethods";
+import { toast } from "sonner";
 
 const AddProductForm = () => {
   const [loading, setLoading] = useState(false);
@@ -61,7 +62,7 @@ const AddProductForm = () => {
         stock: Number(formData.stock),
       });
 
-      alert("Product added");
+      toast.success("Product added successfully");
 
       setFormData({
         title: "",

@@ -11,6 +11,7 @@ import { useCartStore } from "@/store/useCartStore";
 import { useAuthStore } from "@/store/useAuthStore";
 
 import { createOrder } from "@/services/firebase/orderMethods";
+import { toast } from "sonner";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const CheckoutPage = () => {
 
       clearCart();
 
-      alert("Order placed successfully");
+      toast.success("Order placed successfully");
 
       navigate("/");
     } catch (error) {

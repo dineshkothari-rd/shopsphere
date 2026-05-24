@@ -1,18 +1,20 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import MainLayout from "@/layouts/MainLayout";
 import AdminLayout from "@/layouts/AdminLayout";
+import MainLayout from "@/layouts/MainLayout";
 
-import HomePage from "@/pages/customer/HomePage";
-import LoginPage from "@/pages/auth/LoginPage";
-import DashboardPage from "@/pages/admin/DashboardPage";
-import RegisterPage from "@/pages/auth/RegisterPage";
-import ProtectedRoute from "./ProtectedRoute";
-import AdminProductsPage from "@/pages/admin/AdminProductsPage";
-import ProductsPage from "@/pages/customer/ProductsPage";
-import CheckoutPage from "@/pages/customer/CheckoutPage";
-import OrdersPage from "@/pages/customer/OrdersPage";
 import AdminOrdersPage from "@/pages/admin/AdminOrdersPage";
+import AdminProductsPage from "@/pages/admin/AdminProductsPage";
+import DashboardPage from "@/pages/admin/DashboardPage";
+import LoginPage from "@/pages/auth/LoginPage";
+import RegisterPage from "@/pages/auth/RegisterPage";
+import CheckoutPage from "@/pages/customer/CheckoutPage";
+import HomePage from "@/pages/customer/HomePage";
+import OrdersPage from "@/pages/customer/OrdersPage";
+import ProductDetailsPage from "@/pages/customer/ProductDetailsPage";
+import ProductsPage from "@/pages/customer/ProductsPage";
+import AdminRoute from "./AdminRoute";
+import AdminUsersPage from "@/pages/admin/AdminUsersPage";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: "/products",
         element: <ProductsPage />,
+      },
+      {
+        path: "/products/:id",
+        element: <ProductDetailsPage />,
       },
       {
         path: "/checkout",
@@ -50,9 +56,9 @@ export const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <ProtectedRoute>
+      <AdminRoute>
         <AdminLayout />
-      </ProtectedRoute>
+      </AdminRoute>
     ),
     children: [
       {
@@ -66,6 +72,10 @@ export const router = createBrowserRouter([
       {
         path: "orders",
         element: <AdminOrdersPage />,
+      },
+      {
+        path: "users",
+        element: <AdminUsersPage />,
       },
     ],
   },

@@ -1,4 +1,12 @@
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 import { db } from "./firestore";
 
@@ -29,7 +37,42 @@ export const getUserData = async (uid) => {
 
     const snapshot = await getDoc(userRef);
 
-    return snapshot.data();
+    if (snapshot.exists()) {
+      return snapshot.data();
+    }
+
+    return null;
+  } catch (error) {
+    console.log(error);
+
+    return null;
+  }
+};
+
+const usersRef = collection(db, "users");
+
+export const getAllUsers = async () => {
+  try {
+    const snapshot = await getDocs(usersRef);
+
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.log(error);
+
+    return [];
+  }
+};
+
+export const updateUserRole = async (userId, role) => {
+  try {
+    const userRef = doc(db, "users", userId);
+
+    await updateDoc(userRef, {
+      role,
+    });
   } catch (error) {
     console.log(error);
   }
