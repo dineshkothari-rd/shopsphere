@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import {
-  getAllOrders,
+  subscribeToOrders,
   updateOrderStatus,
 } from "@/services/firebase/orderMethods";
 
@@ -17,30 +17,18 @@ const AdminOrdersPage = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    const loadOrders = async () => {
-      try {
-        const data = await getAllOrders();
+    const unsubscribe = subscribeToOrders((data) => {
+      queueMicrotask(() => {
+        setOrders(data);
+      });
+    });
 
-        queueMicrotask(() => {
-          setOrders(data);
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    loadOrders();
+    return () => unsubscribe();
   }, []);
 
   const handleStatusChange = async (orderId, status) => {
     try {
       await updateOrderStatus(orderId, status);
-
-      const updatedOrders = await getAllOrders();
-
-      queueMicrotask(() => {
-        setOrders(updatedOrders);
-      });
     } catch (error) {
       console.log(error);
     }

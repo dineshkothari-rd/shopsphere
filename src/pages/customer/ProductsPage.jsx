@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import ProductCard from "@/components/product/ProductCard";
+import ProductCardSkeleton from "@/components/skeletons/ProductCardSkeleton";
 
 import Container from "@/components/shared/Container";
 
@@ -14,9 +15,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { getProducts } from "@/services/firebase/productMethods";
+import { subscribeToProducts } from "@/services/firebase/productMethods";
 
 const ProductsPage = () => {
+  const [loading, setLoading] = useState(true);
+
   const [products, setProducts] = useState([]);
 
   const [search, setSearch] = useState("");
@@ -26,17 +29,14 @@ const ProductsPage = () => {
   const [category, setCategory] = useState("all");
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await getProducts();
-
+    const unsubscribe = subscribeToProducts((data) => {
+      queueMicrotask(() => {
         setProducts(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+        setLoading(false);
+      });
+    });
 
-    fetchProducts();
+    return () => unsubscribe();
   }, []);
 
   const categories = useMemo(() => {
@@ -109,9 +109,13 @@ const ProductsPage = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {loading
+            ? Array.from({
+                length: 8,
+              }).map((_, index) => <ProductCardSkeleton key={index} />)
+            : filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
         </div>
       </Container>
     </section>

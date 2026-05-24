@@ -3,6 +3,7 @@ import {
   collection,
   doc,
   getDocs,
+  onSnapshot,
   orderBy,
   query,
   serverTimestamp,
@@ -53,5 +54,18 @@ export const updateOrderStatus = async (orderId, status) => {
 
   return updateDoc(orderRef, {
     status,
+  });
+};
+
+export const subscribeToOrders = (callback) => {
+  const q = query(ordersRef, orderBy("createdAt", "desc"));
+
+  return onSnapshot(q, (snapshot) => {
+    const orders = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    callback(orders);
   });
 };

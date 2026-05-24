@@ -4,6 +4,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  onSnapshot,
   orderBy,
   query,
   serverTimestamp,
@@ -40,4 +41,17 @@ export const getSingleProduct = async (productId) => {
     id: snapshot.id,
     ...snapshot.data(),
   };
+};
+
+export const subscribeToProducts = (callback) => {
+  const q = query(productsRef, orderBy("createdAt", "desc"));
+
+  return onSnapshot(q, (snapshot) => {
+    const products = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    callback(products);
+  });
 };
