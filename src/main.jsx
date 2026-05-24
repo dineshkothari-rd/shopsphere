@@ -3,11 +3,11 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 
 import { Toaster } from "sonner";
-import { ThemeProvider } from "./providers/ThemeProvider";
-import { router } from "./routes";
+import { ThemeProvider } from "./app/providers/ThemeProvider";
+import { router } from "./app/router";
 
 import "./index.css";
-import AuthProvider from "./providers/AuthProvider";
+import AuthProvider from "./app/providers/AuthProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
