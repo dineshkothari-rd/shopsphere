@@ -5,10 +5,10 @@ import ThemeToggle from "@/components/shared/ThemeToggle";
 
 import { Button } from "@/components/ui/button";
 
-import { useAuthStore } from "@/store/useAuthStore";
+import { useAuthStore } from "@/features/auth/store/useAuthStore";
 
-import { logoutUser } from "@/services/firebase/authMethods";
-import CartSheet from "../cart/CartSheet";
+import { logoutUser } from "@/features/auth/services/auth.service";
+import { CartSheet } from "@/features/cart";
 
 const Navbar = () => {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { addProduct } from "@/services/firebase/productMethods";
+import { addProduct } from "@/features/products/services/product.service";
 import { toast } from "sonner";
 
 const AddProductForm = () => {

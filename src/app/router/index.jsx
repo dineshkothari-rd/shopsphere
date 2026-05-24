@@ -3,22 +3,19 @@ import { createBrowserRouter } from "react-router-dom";
 import AdminLayout from "@/app/layouts/AdminLayout";
 import MainLayout from "@/app/layouts/MainLayout";
 
-import AdminOrdersPage from "@/pages/admin/AdminOrdersPage";
+import { ProductDetailsPage, ProductsPage } from "@/features/products";
 import AdminProductsPage from "@/pages/admin/AdminProductsPage";
-import DashboardPage from "@/pages/admin/DashboardPage";
-import LoginPage from "@/pages/auth/LoginPage";
-import RegisterPage from "@/pages/auth/RegisterPage";
-import CheckoutPage from "@/pages/customer/CheckoutPage";
-import HomePage from "@/pages/customer/HomePage";
-import OrdersPage from "@/pages/customer/OrdersPage";
-import ProductDetailsPage from "@/pages/customer/ProductDetailsPage";
-import ProductsPage from "@/pages/customer/ProductsPage";
-import AdminRoute from "./AdminRoute";
 import AdminUsersPage from "@/pages/admin/AdminUsersPage";
+import HomePage from "@/pages/customer/HomePage";
+import AdminRoute from "./AdminRoute";
+import { LoginPage, RegisterPage } from "@/features/auth";
+import { AdminOrdersPage, CheckoutPage, OrdersPage } from "@/features/orders";
+import { DashboardPage } from "@/features/dashboard";
+import { ROUTES } from "@/constants/routes";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: ROUTES.HOME,
     element: <MainLayout />,
     children: [
       {
@@ -26,35 +23,35 @@ export const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/products",
+        path: ROUTES.PRODUCTS,
         element: <ProductsPage />,
       },
       {
-        path: "/products/:id",
+        path: `${ROUTES.PRODUCT_DETAILS}/:id`,
         element: <ProductDetailsPage />,
       },
       {
-        path: "/checkout",
+        path: ROUTES.CHECKOUT,
         element: <CheckoutPage />,
       },
       {
-        path: "/orders",
+        path: ROUTES.ORDERS,
         element: <OrdersPage />,
       },
     ],
   },
 
   {
-    path: "/login",
+    path: ROUTES.LOGIN,
     element: <LoginPage />,
   },
   {
-    path: "/register",
+    path: ROUTES.REGISTER,
     element: <RegisterPage />,
   },
 
   {
-    path: "/admin",
+    path: ROUTES.ADMIN,
     element: (
       <AdminRoute>
         <AdminLayout />
@@ -66,15 +63,15 @@ export const router = createBrowserRouter([
         element: <DashboardPage />,
       },
       {
-        path: "products",
+        path: ROUTES.ADMIN_PRODUCTS,
         element: <AdminProductsPage />,
       },
       {
-        path: "orders",
+        path: ROUTES.ADMIN_ORDERS,
         element: <AdminOrdersPage />,
       },
       {
-        path: "users",
+        path: ROUTES.ADMIN_USERS,
         element: <AdminUsersPage />,
       },
     ],

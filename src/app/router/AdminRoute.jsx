@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 
-import { useAuthStore } from "@/store/useAuthStore";
+import { useAuthStore } from "@/features/auth/store/useAuthStore";
+import { ROLES } from "@/constants/roles";
 
 const AdminRoute = ({ children }) => {
   const loading = useAuthStore((state) => state.loading);
@@ -32,7 +33,7 @@ const AdminRoute = ({ children }) => {
     );
   }
 
-  if (userData.role !== "admin") {
+  if (userData.role !== ROLES.ADMIN) {
     return <Navigate to="/" replace />;
   }
 

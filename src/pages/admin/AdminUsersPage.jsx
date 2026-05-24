@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { getAllUsers, updateUserRole } from "@/services/firebase/userMethods";
+import {
+  getAllUsers,
+  updateUserRole,
+} from "@/features/auth/services/user.service";
 
 import {
   Select,
@@ -9,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ROLES } from "@/constants/roles";
 
 const AdminUsersPage = () => {
   const [users, setUsers] = useState([]);
@@ -88,9 +92,9 @@ const AdminUsersPage = () => {
                     </SelectTrigger>
 
                     <SelectContent>
-                      <SelectItem value="customer">Customer</SelectItem>
+                      <SelectItem value={ROLES.CUSTOMER}>Customer</SelectItem>
 
-                      <SelectItem value="admin">Admin</SelectItem>
+                      <SelectItem value={ROLES.ADMIN}>Admin</SelectItem>
                     </SelectContent>
                   </Select>
                 </td>

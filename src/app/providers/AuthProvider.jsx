@@ -4,12 +4,12 @@ import { onAuthStateChanged } from "firebase/auth";
 
 import { auth } from "@/services/firebase/auth";
 
-import { useAuthStore } from "@/store/useAuthStore";
+import { useAuthStore } from "@/features/auth/store/useAuthStore";
 
 import {
   createUserInFirestore,
   getUserData,
-} from "@/services/firebase/userMethods";
+} from "@/features/auth/services/user.service";
 
 const AuthProvider = ({ children }) => {
   const setUser = useAuthStore((state) => state.setUser);

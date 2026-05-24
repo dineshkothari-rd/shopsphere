@@ -1,32 +1,6 @@
-import { LayoutDashboard, Package, ShoppingCart, Users } from "lucide-react";
+import { ADMIN_SIDEBAR_LINKS } from "@/constants/sidebar-links";
 
 import { Link, useLocation } from "react-router-dom";
-
-const links = [
-  {
-    title: "Dashboard",
-    href: "/admin",
-    icon: LayoutDashboard,
-  },
-
-  {
-    title: "Products",
-    href: "/admin/products",
-    icon: Package,
-  },
-
-  {
-    title: "Orders",
-    href: "/admin/orders",
-    icon: ShoppingCart,
-  },
-
-  {
-    title: "Users",
-    href: "/admin/users",
-    icon: Users,
-  },
-];
 
 const AdminSidebar = () => {
   const location = useLocation();
@@ -38,7 +12,7 @@ const AdminSidebar = () => {
       </div>
 
       <nav className="space-y-2 p-4">
-        {links.map((link) => {
+        {ADMIN_SIDEBAR_LINKS.map((link) => {
           const Icon = link.icon;
 
           const active = location.pathname === link.href;
