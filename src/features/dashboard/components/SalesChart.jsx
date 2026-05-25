@@ -6,6 +6,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { motion } from "framer-motion";
 
 const data = [
   {
@@ -36,10 +37,22 @@ const data = [
 
 const SalesChart = () => {
   return (
-    <div className="rounded-3xl border bg-card p-6">
-      <h2 className="mb-6 text-2xl font-bold">Revenue Overview</h2>
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 20,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      className="glass premium-shadow rounded-[2rem] border border-white/10 p-4 sm:p-6"
+    >
+      <h2 className="mb-6 text-2xl font-black tracking-tight">
+        Revenue Overview
+      </h2>
 
-      <div className="h-80">
+      <div className="h-[300px] sm:h-[380px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
             <XAxis dataKey="month" />
@@ -52,7 +65,7 @@ const SalesChart = () => {
           </LineChart>
         </ResponsiveContainer>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

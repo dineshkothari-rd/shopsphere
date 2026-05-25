@@ -10,6 +10,7 @@ import { useAuthStore } from "@/features/auth/store/useAuthStore";
 import { addReview } from "@/features/reviews/services/review.service";
 
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 const ReviewForm = ({ productId }) => {
   const user = useAuthStore((state) => state.user);
@@ -53,20 +54,34 @@ const ReviewForm = ({ productId }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 rounded-3xl border p-6">
-      <h2 className="text-2xl font-bold">Write a Review</h2>
+    <form
+      onSubmit={handleSubmit}
+      className="glass premium-shadow space-y-6 rounded-[2rem] border border-white/10 p-5 sm:p-8"
+    >
+      <h2 className="text-2xl font-black tracking-tight">Write a Review</h2>
 
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-3">
         {[1, 2, 3, 4, 5].map((star) => (
-          <button type="button" key={star} onClick={() => setRating(star)}>
+          <motion.button
+            whileTap={{
+              scale: 0.9,
+            }}
+            whileHover={{
+              scale: 1.1,
+            }}
+            type="button"
+            key={star}
+            onClick={() => setRating(star)}
+            className="transition"
+          >
             <Star
-              className={`h-7 w-7 ${
+              className={`h-8 w-8 transition ${
                 star <= rating
                   ? "fill-yellow-400 text-yellow-400"
                   : "text-muted-foreground"
               }`}
             />
-          </button>
+          </motion.button>
         ))}
       </div>
 
@@ -74,9 +89,14 @@ const ReviewForm = ({ productId }) => {
         placeholder="Write your review..."
         value={review}
         onChange={(e) => setReview(e.target.value)}
+        className="min-h-[140px] rounded-3xl border-white/10 bg-background/50 p-5"
       />
 
-      <Button type="submit" disabled={loading}>
+      <Button
+        type="submit"
+        disabled={loading}
+        className="h-14 rounded-2xl px-8 text-base font-semibold"
+      >
         {loading ? "Submitting..." : "Submit Review"}
       </Button>
     </form>

@@ -4,10 +4,10 @@ import AdminSidebar from "@/components/admin/AdminSidebar";
 
 const AdminLayout = () => {
   return (
-    <div className="flex min-h-screen bg-muted/30">
+    <div className="min-h-screen bg-background">
       <AdminSidebar />
 
-      <main className="flex-1">
+      <main className="min-h-screen lg:ml-72">
         <Outlet />
       </main>
     </div>

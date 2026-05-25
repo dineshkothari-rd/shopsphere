@@ -18,3 +18,13 @@ export const createProduct = createProductDB;
 export const updateProduct = updateProductDB;
 
 export const deleteProduct = deleteProductDB;
+
+export const getRelatedProducts = async (products, currentProduct) => {
+  return products
+    .filter(
+      (item) =>
+        item.category === currentProduct.category &&
+        item.id !== currentProduct.id,
+    )
+    .slice(0, 4);
+};

@@ -12,6 +12,7 @@ import { LoginPage, RegisterPage } from "@/features/auth";
 import { AdminOrdersPage, CheckoutPage, OrdersPage } from "@/features/orders";
 import { DashboardPage } from "@/features/dashboard";
 import { ROUTES } from "@/constants/routes";
+import WishlistPage from "@/features/wishlist/pages/WishlistPage";
 
 export const router = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
         element: <ProductsPage />,
       },
       {
-        path: `${ROUTES.PRODUCT_DETAILS}/:id`,
+        path: `${ROUTES.PRODUCTS}/:id`,
         element: <ProductDetailsPage />,
       },
       {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.ORDERS,
         element: <OrdersPage />,
+      },
+      {
+        path: ROUTES.WISHLIST,
+        element: <WishlistPage />,
       },
     ],
   },

@@ -18,4 +18,6 @@ export const ROUTES = {
   ADMIN_ORDERS: "/admin/orders",
 
   ADMIN_USERS: "/admin/users",
+
+  WISHLIST: "/wishlist",
 };

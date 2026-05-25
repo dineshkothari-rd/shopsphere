@@ -118,3 +118,35 @@
     @apply min-h-screen;
   }
 }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply border border-white/10 bg-white/5 backdrop-blur-xl;
+  }
+
+  .hover-scale {
+    @apply transition-all duration-300 hover:scale-[1.02];
+  }
+
+  .premium-shadow {
+    box-shadow:
+      0 10px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent;
+  }
+}

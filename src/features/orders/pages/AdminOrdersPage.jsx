@@ -1,5 +1,3 @@
-import { updateOrderStatus } from "@/services/firebase/orderMethods";
-
 import {
   Select,
   SelectContent,
@@ -8,10 +6,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useOrders } from "@/hooks/useOrders";
-import { ORDER_STATUS } from "@/constants/order-status";
+import { ORDER_STATUS, ORDER_STATUS_STYLES } from "@/constants/order-status";
+import { updateOrderStatus } from "../services/order.service";
 
 const AdminOrdersPage = () => {
   const { orders } = useOrders();
+
+  console.log({ orders });
 
   const handleStatusChange = async (orderId, status) => {
     try {
@@ -22,25 +23,66 @@ const AdminOrdersPage = () => {
   };
 
   return (
-    <div className="space-y-6 p-8">
-      <h1 className="text-3xl font-bold">Manage Orders</h1>
+    <div className="space-y-6 p-4 sm:p-6 lg:p-8">
+      <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
+        Manage Orders
+      </h1>
 
       {orders.map((order) => (
-        <div key={order.id} className="space-y-4 rounded-2xl border p-6">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <h2 className="font-semibold">{order.userEmail}</h2>
+        <div
+          key={order.id}
+          className="glass premium-shadow space-y-5 rounded-[2rem] border border-white/10 p-5 sm:p-6"
+        >
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  Order ID
+                </p>
 
-              <p className="text-sm text-muted-foreground">{order.address}</p>
+                <p className="text-sm font-medium">#{order.id.slice(0, 8)}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Customer</p>
 
-              <p className="mt-2 font-bold">₹{order.total}</p>
+                <h2 className="text-xl font-black">
+                  {order.name || "Unknown User"}
+                </h2>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground">
+                  {order.userEmail}
+                </p>
+
+                <p className="text-sm text-muted-foreground">
+                  {order.phone || "No Contact"}
+                </p>
+              </div>
+
+              <div className="pt-2">
+                <p className="text-sm text-muted-foreground">
+                  Delivery Address
+                </p>
+
+                <p className="font-medium">{order.address}</p>
+              </div>
+
+              <p className="pt-2 text-2xl font-black">₹{order.total}</p>
+              <div
+                className={`inline-flex rounded-full border px-4 py-2 text-xs font-semibold capitalize ${
+                  ORDER_STATUS_STYLES[order.status]
+                }`}
+              >
+                {order.status}
+              </div>
             </div>
 
             <Select
               value={order.status}
               onValueChange={(value) => handleStatusChange(order.id, value)}
             >
-              <SelectTrigger className="w-52">
+              <SelectTrigger className="h-12 min-h-12 w-full rounded-2xl border-white/10 bg-background/50 lg:w-56">
                 <SelectValue />
               </SelectTrigger>
 
@@ -64,13 +106,16 @@ const AdminOrdersPage = () => {
             </Select>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-3">
             {order.items.map((item) => (
-              <div key={item.id} className="flex items-center gap-4">
+              <div
+                key={item.id}
+                className="flex items-center gap-4 rounded-2xl border border-white/10 bg-background/30 p-3"
+              >
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="h-16 w-16 rounded-lg object-cover"
+                  className="h-16 w-16 rounded-2xl object-cover"
                 />
 
                 <div>

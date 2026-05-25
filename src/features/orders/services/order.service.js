@@ -11,8 +11,8 @@ import {
   where,
 } from "firebase/firestore";
 
-import { db } from "./firestore";
 import { ORDER_STATUS } from "@/constants/order-status";
+import { db } from "@/services/firebase/firestore";
 
 const ordersRef = collection(db, "orders");
 
@@ -25,18 +25,20 @@ export const createOrder = async (orderData) => {
 };
 
 export const getUserOrders = async (userId) => {
-  const q = query(
-    ordersRef,
-    where("userId", "==", userId),
-    orderBy("createdAt", "desc"),
-  );
+  try {
+    const q = query(ordersRef, where("userId", "==", userId));
 
-  const snapshot = await getDocs(q);
+    const snapshot = await getDocs(q);
 
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.log(error);
+
+    return [];
+  }
 };
 
 export const getAllOrders = async () => {

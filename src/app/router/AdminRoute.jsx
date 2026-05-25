@@ -10,8 +10,6 @@ const AdminRoute = ({ children }) => {
 
   const userData = useAuthStore((state) => state.userData);
 
-  console.log("lkasjdlaksd", { user, userData });
-
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">

@@ -14,8 +14,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { motion } from "framer-motion";
 
+import { Button } from "@/components/ui/button";
 import { useProducts } from "@/hooks/useProducts";
+import { Search, X } from "lucide-react";
 
 const ProductsPage = () => {
   const { products, loading } = useProducts();
@@ -25,6 +28,7 @@ const ProductsPage = () => {
   const [sort, setSort] = useState("");
 
   const [category, setCategory] = useState("all");
+  const [priceRange, setPriceRange] = useState("all");
 
   const categories = useMemo(() => {
     const unique = [...new Set(products.map((item) => item.category))];
@@ -45,6 +49,20 @@ const ProductsPage = () => {
       filtered = filtered.filter((item) => item.category === category);
     }
 
+    if (priceRange === "under1000") {
+      filtered = filtered.filter((item) => item.price < 1000);
+    }
+
+    if (priceRange === "1000to5000") {
+      filtered = filtered.filter(
+        (item) => item.price >= 1000 && item.price <= 5000,
+      );
+    }
+
+    if (priceRange === "5000plus") {
+      filtered = filtered.filter((item) => item.price > 5000);
+    }
+
     if (sort === "low") {
       filtered.sort((a, b) => a.price - b.price);
     }
@@ -57,17 +75,48 @@ const ProductsPage = () => {
   }, [products, search, sort, category]);
 
   return (
-    <section className="py-10">
-      <Container className="space-y-8">
-        <div className="flex flex-col gap-4 md:flex-row">
-          <Input
-            placeholder="Search products..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+    <section className="relative overflow-hidden py-8 sm:py-10">
+      <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+
+      <div className="absolute right-0 top-40 h-72 w-72 rounded-full bg-purple-500/10 blur-3xl" />
+      <Container className="relative space-y-8">
+        <div className="space-y-3">
+          <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+            Explore Products
+          </div>
+
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <h1 className="text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+                Discover Products
+              </h1>
+
+              <p className="mt-3 max-w-2xl text-base text-muted-foreground sm:text-lg">
+                Curated premium products for modern shopping experience.
+              </p>
+            </div>
+
+            <div className="glass w-full rounded-2xl px-5 py-4 sm:w-max">
+              <p className="text-sm text-muted-foreground">Total Products</p>
+
+              <h2 className="text-3xl font-black">{filteredProducts.length}</h2>
+            </div>
+          </div>
+        </div>
+        <div className="glass premium-shadow sticky top-24 z-20 flex flex-col gap-4 rounded-3xl border border-white/10 p-4 sm:p-5 lg:flex-row">
+          <div className="relative w-full">
+            <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+
+            <Input
+              placeholder="Search premium products..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="h-12 w-full rounded-2xl border-white/10 bg-background/50 pl-12"
+            />
+          </div>
 
           <Select value={category} onValueChange={setCategory}>
-            <SelectTrigger className="w-full md:w-52">
+            <SelectTrigger className="h-12 min-h-12 w-full rounded-2xl border-white/10 bg-background/50 lg:w-55">
               <SelectValue placeholder="Category" />
             </SelectTrigger>
 
@@ -82,8 +131,24 @@ const ProductsPage = () => {
             </SelectContent>
           </Select>
 
+          <Select value={priceRange} onValueChange={setPriceRange}>
+            <SelectTrigger className="h-12 min-h-12 w-full rounded-2xl border-white/10 bg-background/50 lg:w-55">
+              <SelectValue placeholder="Price Range" />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectItem value="all">All Prices</SelectItem>
+
+              <SelectItem value="under1000">Under ₹1000</SelectItem>
+
+              <SelectItem value="1000to5000">₹1000 - ₹5000</SelectItem>
+
+              <SelectItem value="5000plus">Above ₹5000</SelectItem>
+            </SelectContent>
+          </Select>
+
           <Select value={sort} onValueChange={setSort}>
-            <SelectTrigger className="w-full md:w-52">
+            <SelectTrigger className="h-12 min-h-12 w-full rounded-2xl border-white/10 bg-background/50 lg:w-55">
               <SelectValue placeholder="Sort By" />
             </SelectTrigger>
 
@@ -93,17 +158,88 @@ const ProductsPage = () => {
               <SelectItem value="high">Price High to Low</SelectItem>
             </SelectContent>
           </Select>
+
+          <Button
+            variant="outline"
+            className="h-12 rounded-2xl border-white/10 bg-background/50"
+            onClick={() => {
+              setSearch("");
+              setCategory("all");
+              setSort("");
+              setPriceRange("all");
+            }}
+          >
+            <X className="mr-2 h-4 w-4" />
+            Clear
+          </Button>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="flex flex-wrap gap-3">
+          <button
+            onClick={() => setCategory("all")}
+            className={`rounded-full px-5 py-2 text-sm font-medium transition ${
+              category === "all"
+                ? "bg-primary text-primary-foreground"
+                : "glass border border-white/10"
+            }`}
+          >
+            All
+          </button>
+
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setCategory(cat)}
+              className={`rounded-full px-5 py-2 text-sm font-medium capitalize transition ${
+                category === cat
+                  ? "bg-primary text-primary-foreground"
+                  : "glass border border-white/10"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <motion.div
+          layout
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        >
           {loading
             ? Array.from({
                 length: 8,
               }).map((_, index) => <ProductCardSkeleton key={index} />)
-            : filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+            : filteredProducts.map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{
+                    opacity: 0,
+                    y: 30,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    delay: index * 0.05,
+                    duration: 0.4,
+                  }}
+                >
+                  <ProductCard product={product} />
+                </motion.div>
               ))}
-        </div>
+        </motion.div>
+        {!loading && filteredProducts.length === 0 && (
+          <div className="glass premium-shadow rounded-[2rem] border border-white/10 p-8 text-center sm:p-16">
+            <h2 className="text-2xl font-black sm:text-3xl">
+              No Products Found
+            </h2>
+
+            <p className="mt-3 text-muted-foreground">
+              Try adjusting your search or filters.
+            </p>
+          </div>
+        )}
       </Container>
     </section>
   );

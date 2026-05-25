@@ -1,6 +1,7 @@
 import SalesChart from "@/features/dashboard/components/SalesChart";
 
 import { useDashboard } from "@/hooks/useDashboard";
+import { motion } from "framer-motion";
 
 const DashboardPage = () => {
   const { stats } = useDashboard();
@@ -28,23 +29,30 @@ const DashboardPage = () => {
   ];
 
   return (
-    <div className="space-y-8 p-8">
+    <div className="space-y-6 p-4 sm:p-6 lg:space-y-8 lg:p-8">
       <div>
-        <h1 className="text-4xl font-bold">Dashboard</h1>
+        <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
+          Dashboard
+        </h1>
 
         <p className="text-muted-foreground">Ecommerce analytics overview</p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map((item) => (
-          <div
+          <motion.div
             key={item.title}
-            className="rounded-3xl border bg-card p-6 shadow-sm"
+            whileHover={{
+              y: -4,
+            }}
+            className="glass premium-shadow rounded-[2rem] border border-white/10 p-5 sm:p-6"
           >
-            <p className="text-muted-foreground">{item.title}</p>
+            <p className="text-sm text-muted-foreground">{item.title}</p>
 
-            <h2 className="mt-2 text-4xl font-bold">{item.value}</h2>
-          </div>
+            <h2 className="mt-3 text-3xl font-black sm:text-4xl">
+              {item.value}
+            </h2>
+          </motion.div>
         ))}
       </div>
 

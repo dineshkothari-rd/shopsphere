@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { addProduct } from "@/features/products/services/product.service";
 import { toast } from "sonner";
+import { createProduct } from "@/features/products/services/product.service";
 
 const AddProductForm = () => {
   const [loading, setLoading] = useState(false);
@@ -56,7 +56,7 @@ const AddProductForm = () => {
     try {
       setLoading(true);
 
-      await addProduct({
+      await createProduct({
         ...formData,
         price: Number(formData.price),
         stock: Number(formData.stock),
