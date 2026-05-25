@@ -9,6 +9,7 @@ import {
   orderBy,
   query,
   updateDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 
 import { db } from "@/services/firebase/firestore";
@@ -51,7 +52,10 @@ export const getSingleProductDB = async (productId) => {
 };
 
 export const createProductDB = async (data) => {
-  return addDoc(productsRef, data);
+  return addDoc(productsRef, {
+    ...data,
+    createdAt: serverTimestamp(),
+  });
 };
 
 export const updateProductDB = async (productId, data) => {
