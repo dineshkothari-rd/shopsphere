@@ -1,0 +1,84 @@
+import { createBrowserRouter } from "react-router-dom";
+
+import AdminLayout from "@/app/layouts/AdminLayout";
+import MainLayout from "@/app/layouts/MainLayout";
+
+import { ProductDetailsPage, ProductsPage } from "@/features/products";
+import AdminProductsPage from "@/pages/admin/AdminProductsPage";
+import AdminUsersPage from "@/pages/admin/AdminUsersPage";
+import HomePage from "@/pages/customer/HomePage";
+import AdminRoute from "./AdminRoute";
+import { LoginPage, RegisterPage } from "@/features/auth";
+import { AdminOrdersPage, CheckoutPage, OrdersPage } from "@/features/orders";
+import { DashboardPage } from "@/features/dashboard";
+import { ROUTES } from "@/constants/routes";
+import WishlistPage from "@/features/wishlist/pages/WishlistPage";
+
+export const router = createBrowserRouter([
+  {
+    path: ROUTES.HOME,
+    element: <MainLayout />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: ROUTES.PRODUCTS,
+        element: <ProductsPage />,
+      },
+      {
+        path: `${ROUTES.PRODUCTS}/:id`,
+        element: <ProductDetailsPage />,
+      },
+      {
+        path: ROUTES.CHECKOUT,
+        element: <CheckoutPage />,
+      },
+      {
+        path: ROUTES.ORDERS,
+        element: <OrdersPage />,
+      },
+      {
+        path: ROUTES.WISHLIST,
+        element: <WishlistPage />,
+      },
+    ],
+  },
+
+  {
+    path: ROUTES.LOGIN,
+    element: <LoginPage />,
+  },
+  {
+    path: ROUTES.REGISTER,
+    element: <RegisterPage />,
+  },
+
+  {
+    path: ROUTES.ADMIN,
+    element: (
+      <AdminRoute>
+        <AdminLayout />
+      </AdminRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <DashboardPage />,
+      },
+      {
+        path: ROUTES.ADMIN_PRODUCTS,
+        element: <AdminProductsPage />,
+      },
+      {
+        path: ROUTES.ADMIN_ORDERS,
+        element: <AdminOrdersPage />,
+      },
+      {
+        path: ROUTES.ADMIN_USERS,
+        element: <AdminUsersPage />,
+      },
+    ],
+  },
+]);
