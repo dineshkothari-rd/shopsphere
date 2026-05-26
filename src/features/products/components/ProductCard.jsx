@@ -29,6 +29,13 @@ const ProductCard = ({ product }) => {
 
   const isWishlisted = !!wishlistItem;
 
+  const discountPercentage =
+    product.comparePrice > product.price
+      ? Math.round(
+          ((product.comparePrice - product.price) / product.comparePrice) * 100,
+        )
+      : 0;
+
   const handleWishlist = async () => {
     if (!user) {
       return toast.error("Please login first");
@@ -75,11 +82,37 @@ const ProductCard = ({ product }) => {
           <Link to={`/products/${product.id}`}>
             <div className="relative aspect-[4/4.2] overflow-hidden bg-muted sm:aspect-square">
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+              <div className="absolute left-3 top-3 z-10 flex flex-wrap gap-2">
+                {discountPercentage > 0 && (
+                  <span className="rounded-full bg-red-500 px-3 py-1 text-xs font-bold text-white shadow-lg">
+                    {discountPercentage}% OFF
+                  </span>
+                )}
+
+                {product.isNew && (
+                  <span className="rounded-full bg-blue-500 px-3 py-1 text-xs font-bold text-white shadow-lg">
+                    NEW
+                  </span>
+                )}
+
+                {product.isTrending && (
+                  <span className="rounded-full bg-orange-500 px-3 py-1 text-xs font-bold text-white shadow-lg">
+                    TRENDING
+                  </span>
+                )}
+              </div>
               <img
                 src={product.image}
                 alt={product.title}
                 className="h-full w-full object-cover transition duration-700 hover:scale-105"
               />
+              {product.stock <= 0 && (
+                <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+                  <span className="rounded-full bg-red-500 px-5 py-2 text-sm font-bold text-white">
+                    Out Of Stock
+                  </span>
+                </div>
+              )}
               <Button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -121,9 +154,25 @@ const ProductCard = ({ product }) => {
               </div>
 
               <div className="flex items-center justify-between gap-3">
-                <span className="text-base font-black sm:text-lg">
-                  ₹{product.price}
-                </span>
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base font-black sm:text-lg">
+                      ₹{product.price}
+                    </span>
+
+                    {product.comparePrice > product.price && (
+                      <span className="text-xs text-muted-foreground line-through sm:text-sm">
+                        ₹{product.comparePrice}
+                      </span>
+                    )}
+                  </div>
+
+                  {product.stock > 0 && product.stock <= 5 && (
+                    <span className="text-xs font-medium text-orange-500">
+                      Only {product.stock} left
+                    </span>
+                  )}
+                </div>
 
                 <span className="truncate rounded-full border border-white/10 bg-secondary/60 px-3 py-1 text-xs backdrop-blur-xl">
                   {product.category}
@@ -134,10 +183,11 @@ const ProductCard = ({ product }) => {
 
           <div className="p-3 pt-0 sm:px-4 sm:pb-4">
             <Button
+              disabled={product.stock <= 0}
               className="h-10 w-full rounded-xl text-sm font-semibold sm:h-11"
               onClick={() => addToCart(product)}
             >
-              Add To Cart
+              {product.stock <= 0 ? "Out Of Stock" : "Add To Cart"}
             </Button>
           </div>
         </Card>
