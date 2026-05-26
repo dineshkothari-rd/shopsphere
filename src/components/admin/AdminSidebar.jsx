@@ -104,7 +104,10 @@ const AdminSidebar = () => {
             </Button>
           </SheetTrigger>
 
-          <SheetContent className="glass border-white/10 p-0">
+          <SheetContent
+            onOpenAutoFocus={(e) => e.preventDefault()}
+            className="glass border-white/10 p-0"
+          >
             <SidebarContent
               pathname={location.pathname}
               onNavigate={() => setOpen(false)}

@@ -19,6 +19,7 @@ import ProductQuickView from "@/features/products/components/ProductQuickView";
 import { useState } from "react";
 
 const ProductCard = ({ product }) => {
+  const [adding, setAdding] = useState(false);
   const [openQuickView, setOpenQuickView] = useState(false);
   const addToCart = useCartStore((state) => state.addToCart);
   const user = useAuthStore((state) => state.user);
@@ -72,7 +73,7 @@ const ProductCard = ({ product }) => {
     <>
       <motion.div
         whileHover={{
-          y: window.innerWidth >= 1024 ? -6 : -2,
+          y: -4,
         }}
         transition={{
           duration: 0.25,
@@ -120,7 +121,7 @@ const ProductCard = ({ product }) => {
                   e.preventDefault();
                   handleWishlist();
                 }}
-                className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/50 shadow-lg backdrop-blur-xl transition hover:scale-105 hover:bg-black/70"
+                className="absolute right-3 top-3 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-white/20 bg-black/50 shadow-lg backdrop-blur-xl transition hover:scale-105 hover:bg-black/70"
               >
                 <Heart
                   className={`h-5 w-5 ${
@@ -136,7 +137,7 @@ const ProductCard = ({ product }) => {
 
                   setOpenQuickView(true);
                 }}
-                className="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/50 shadow-lg backdrop-blur-xl transition hover:scale-105 hover:bg-black/70"
+                className="absolute bottom-3 right-3 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-white/20 bg-black/50 shadow-lg backdrop-blur-xl transition hover:scale-105 hover:bg-black/70"
               >
                 <Eye className="h-5 w-5 text-white" />
               </Button>
@@ -183,9 +184,17 @@ const ProductCard = ({ product }) => {
 
           <div className="p-3 pt-0 sm:px-4 sm:pb-4">
             <Button
-              disabled={product.stock <= 0}
+              disabled={adding || product.stock <= 0}
               className="h-10 w-full rounded-xl text-sm font-semibold sm:h-11"
-              onClick={() => addToCart(product)}
+              onClick={() => {
+                setAdding(true);
+
+                addToCart(product);
+
+                setTimeout(() => {
+                  setAdding(false);
+                }, 500);
+              }}
             >
               {product.stock <= 0 ? "Out Of Stock" : "Add To Cart"}
             </Button>

@@ -56,7 +56,10 @@ const CartSheet = () => {
       </SheetTrigger>
 
       {/* sheet */}
-      <SheetContent className="glass flex w-full flex-col border-white/10 sm:max-w-lg">
+      <SheetContent
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        className="glass flex w-full flex-col border-white/10 sm:max-w-lg"
+      >
         {/* header */}
         <SheetHeader className="border-b border-white/10 pb-6">
           <div className="space-y-2">
@@ -66,7 +69,7 @@ const CartSheet = () => {
 
             <div className="flex items-end justify-between">
               <div>
-                <SheetTitle className="text-4xl font-black tracking-tight">
+                <SheetTitle className="text-2xl font-black tracking-tight sm:text-4xl">
                   Your Cart
                 </SheetTitle>
 
@@ -116,13 +119,13 @@ const CartSheet = () => {
                     opacity: 0,
                     scale: 0.95,
                   }}
-                  className="glass premium-shadow flex gap-4 rounded-3xl border border-white/10 p-4"
+                  className="glass premium-shadow flex gap-3 rounded-2xl border border-white/10 p-3"
                 >
                   {/* image */}
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="h-24 w-24 rounded-2xl object-cover"
+                    className="h-20 w-20 rounded-2xl object-cover"
                   />
 
                   {/* content */}
@@ -180,7 +183,9 @@ const CartSheet = () => {
             <div className="flex items-center justify-between">
               <p className="text-lg text-muted-foreground">Total</p>
 
-              <h2 className="text-4xl font-black">₹{total.toFixed(2)}</h2>
+              <h2 className="text-2xl font-black sm:text-4xl">
+                ₹{total.toFixed(2)}
+              </h2>
             </div>
 
             <Button

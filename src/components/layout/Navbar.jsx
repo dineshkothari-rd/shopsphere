@@ -94,7 +94,7 @@ const Navbar = () => {
             </>
           )}
         </div>
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-3 md:hidden">
           {user && (
             <>
               <Link to="/wishlist" className="relative">
@@ -124,7 +124,10 @@ const Navbar = () => {
               </Button>
             </SheetTrigger>
 
-            <SheetContent className="glass w-[320px] border-white/10 p-0">
+            <SheetContent
+              onOpenAutoFocus={(e) => e.preventDefault()}
+              className="glass w-[320px] border-white/10 p-0"
+            >
               <div className="flex h-full flex-col">
                 {/* top */}
                 <div className="border-b border-white/10 p-6">

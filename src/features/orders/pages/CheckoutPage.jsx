@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -34,6 +34,12 @@ const CheckoutPage = () => {
     (acc, item) => acc + item.price * item.quantity,
     0,
   );
+
+  useEffect(() => {
+    if (!cartItems.length) {
+      navigate("/products");
+    }
+  }, [cartItems]);
 
   const handlePlaceOrder = async () => {
     try {

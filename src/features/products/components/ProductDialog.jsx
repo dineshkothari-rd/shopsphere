@@ -72,7 +72,10 @@ const ProductDialog = ({ mode = "create", product = null }) => {
         )}
       </DialogTrigger>
 
-      <DialogContent className="glass max-h-[90vh] overflow-y-auto rounded-[2rem] border border-white/10 sm:max-w-2xl">
+      <DialogContent
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        className="glass max-h-[100dvh] overflow-y-auto rounded-[2rem] border border-white/10 sm:max-w-2xl"
+      >
         <DialogHeader>
           <DialogTitle className="text-3xl font-black tracking-tight">
             {isEdit ? "Edit Product" : "Add Product"}
