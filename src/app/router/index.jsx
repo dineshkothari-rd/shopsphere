@@ -6,13 +6,13 @@ import MainLayout from "@/app/layouts/MainLayout";
 import { ProductDetailsPage, ProductsPage } from "@/features/products";
 import AdminProductsPage from "@/pages/admin/AdminProductsPage";
 import AdminUsersPage from "@/pages/admin/AdminUsersPage";
-import HomePage from "@/pages/customer/HomePage";
 import AdminRoute from "./AdminRoute";
 import { LoginPage, RegisterPage } from "@/features/auth";
 import { AdminOrdersPage, CheckoutPage, OrdersPage } from "@/features/orders";
 import { DashboardPage } from "@/features/dashboard";
 import { ROUTES } from "@/constants/routes";
 import WishlistPage from "@/features/wishlist/pages/WishlistPage";
+import HomePage from "@/features/dashboard/pages/HomePage";
 
 export const router = createBrowserRouter([
   {
