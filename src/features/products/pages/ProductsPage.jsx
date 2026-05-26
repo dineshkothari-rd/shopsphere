@@ -84,6 +84,18 @@ const ProductsPage = () => {
     return filtered;
   }, [products, search, sort, category]);
 
+  const resetFilters = () => {
+    setSearch("");
+
+    setCategory("all");
+    setPriceRange("all");
+    setSort("");
+
+    setTempCategory("all");
+    setTempPriceRange("all");
+    setTempSort("");
+  };
+
   return (
     <section className="relative overflow-hidden py-8 sm:py-10">
       <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
@@ -113,7 +125,7 @@ const ProductsPage = () => {
             </div>
           </div>
         </div>
-        <div className="glass premium-shadow sticky top-24 z-20 rounded-[2rem] border border-white/10 p-4">
+        <div className="glass premium-shadow sticky top-[88px] z-20 rounded-[2rem] border border-white/10 p-4">
           {/* mobile */}
           <div className="space-y-4 lg:hidden">
             <div className="relative">
@@ -136,7 +148,10 @@ const ProductsPage = () => {
                   </Button>
                 </SheetTrigger>
 
-                <SheetContent className="glass w-full border-l border-white/10 bg-background/95 px-5 py-8 sm:max-w-md">
+                <SheetContent
+                  onOpenAutoFocus={(e) => e.preventDefault()}
+                  className="glass w-full border-l border-white/10 bg-background/95 px-5 py-8 sm:max-w-md"
+                >
                   <div className="flex h-full flex-col overflow-y-auto">
                     <div className="mb-8">
                       <h2 className="text-3xl font-black tracking-tight">
@@ -282,19 +297,7 @@ const ProductsPage = () => {
                         <Button
                           variant="outline"
                           className="h-12 rounded-2xl border-white/10 px-5"
-                          onClick={() => {
-                            setCategory("all");
-                            setPriceRange("all");
-                            setSort("");
-
-                            setTempCategory("all");
-                            setTempPriceRange("all");
-                            setTempSort("");
-
-                            setSearch("");
-
-                            setOpenFilters(false);
-                          }}
+                          onClick={resetFilters}
                         >
                           Clear
                         </Button>
@@ -406,12 +409,7 @@ const ProductsPage = () => {
             <Button
               variant="outline"
               className="h-12 rounded-2xl border-white/10 px-5"
-              onClick={() => {
-                setSearch("");
-                setCategory("all");
-                setSort("");
-                setPriceRange("all");
-              }}
+              onClick={resetFilters}
             >
               <X className="mr-2 h-4 w-4" />
               Clear

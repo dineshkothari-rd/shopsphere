@@ -99,7 +99,13 @@ const ProductDetailsPage = () => {
         <div className="mb-8 flex items-center justify-between">
           <Button
             variant="outline"
-            onClick={() => navigate(-1)}
+            onClick={() => {
+              if (window.history.length > 1) {
+                navigate(-1);
+              } else {
+                navigate("/products");
+              }
+            }}
             className="glass h-11 rounded-2xl border border-white/10 px-5"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -124,7 +130,7 @@ const ProductDetailsPage = () => {
             </span>
           </div>
         </div>
-        <div className="grid items-start gap-12 lg:grid-cols-2">
+        <div className="grid items-start gap-6 lg:gap-12 lg:grid-cols-2">
           {/* image section */}
           <motion.div
             initial={{
@@ -166,7 +172,7 @@ const ProductDetailsPage = () => {
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="h-[350px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[500px] lg:h-[650px]"
+                  className="h-[300px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[500px] lg:h-[650px]"
                 />
               </div>
             </div>
@@ -224,14 +230,14 @@ const ProductDetailsPage = () => {
             }}
             className="space-y-8 lg:sticky lg:top-28"
           >
-            <div className="glass premium-shadow space-y-6 rounded-[2rem] border border-white/10 p-8">
+            <div className="glass premium-shadow space-y-5 rounded-[2rem] border border-white/10 p-4 sm:p-6 lg:p-8">
               {/* category + title */}
               <div className="space-y-5">
                 <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
                   {product.category}
                 </div>
 
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight">
+                <h1 className="text-2xl font-black leading-tight tracking-tight sm:text-4xl lg:text-5xl">
                   {product.title}
                 </h1>
 
@@ -297,6 +303,11 @@ const ProductDetailsPage = () => {
                   size="lg"
                   variant="outline"
                   disabled={product.stock <= 0}
+                  onClick={() => {
+                    addToCart(product);
+
+                    navigate("/checkout");
+                  }}
                   className="h-14 flex-1 rounded-2xl border-white/10 bg-background/50 text-base font-semibold backdrop-blur-xl"
                 >
                   Buy Now

@@ -10,33 +10,38 @@ import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/features/cart/store/useCartStore";
 
 import { Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ProductQuickView = ({ open, onOpenChange, product }) => {
+  const navigate = useNavigate();
   const addToCart = useCartStore((state) => state.addToCart);
 
   if (!product) return null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="glass max-h-[90vh] overflow-y-auto rounded-[2rem] border border-white/10 p-0 sm:max-w-5xl">
+      <DialogContent
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        className="glass max-h-[100dvh] overflow-y-auto rounded-t-[2rem] border border-white/10 p-0 sm:max-w-5xl"
+      >
         <div className="grid gap-0 lg:grid-cols-2">
           {/* image */}
           <div className="relative overflow-hidden">
             <img
               src={product.image}
               alt={product.title}
-              className="h-[350px] w-full object-cover lg:h-full"
+              className="h-[260px] w-full object-cover sm:h-[350px] lg:h-full"
             />
           </div>
 
           {/* content */}
-          <div className="space-y-6 p-6 sm:p-8">
+          <div className="space-y-5 p-4 sm:p-8">
             <DialogHeader className="space-y-4 text-left">
               <div className="inline-flex w-max rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
                 {product.category}
               </div>
 
-              <DialogTitle className="text-3xl font-black leading-tight">
+              <DialogTitle className="text-2xl font-black leading-tight sm:text-3xl">
                 {product.title}
               </DialogTitle>
 
@@ -86,6 +91,13 @@ const ProductQuickView = ({ open, onOpenChange, product }) => {
               <Button
                 variant="outline"
                 className="h-12 rounded-2xl border-white/10"
+                onClick={() => {
+                  addToCart(product);
+
+                  onOpenChange(false);
+
+                  navigate("/checkout");
+                }}
               >
                 Buy Now
               </Button>
