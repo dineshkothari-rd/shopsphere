@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { motion } from "framer-motion";
 
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Container from "@/components/shared/Container";
 
@@ -15,11 +15,13 @@ import {
 } from "@/features/products/services/product.service";
 
 import { useCartStore } from "@/features/cart/store/useCartStore";
+import { ArrowLeft } from "lucide-react";
 
 import { ReviewForm, ReviewsList } from "@/features/reviews";
 import ProductCard from "../components/ProductCard";
 
 const ProductDetailsPage = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const addToCart = useCartStore((state) => state.addToCart);
@@ -81,6 +83,34 @@ const ProductDetailsPage = () => {
       <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-purple-500/10 blur-3xl" />
 
       <Container className="relative">
+        <div className="mb-8 flex items-center justify-between">
+          <Button
+            variant="outline"
+            onClick={() => navigate(-1)}
+            className="glass h-11 rounded-2xl border border-white/10 px-5"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back
+          </Button>
+
+          <div className="hidden items-center gap-2 text-sm text-muted-foreground sm:flex">
+            <Link to="/" className="hover:text-foreground">
+              Home
+            </Link>
+
+            <span>/</span>
+
+            <Link to="/products" className="hover:text-foreground">
+              Products
+            </Link>
+
+            <span>/</span>
+
+            <span className="line-clamp-1 max-w-[200px] text-foreground">
+              {product.title}
+            </span>
+          </div>
+        </div>
         <div className="grid items-start gap-12 lg:grid-cols-2">
           {/* image section */}
           <motion.div

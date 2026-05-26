@@ -18,7 +18,8 @@ import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import { useProducts } from "@/hooks/useProducts";
-import { Search, X } from "lucide-react";
+import { Search, SlidersHorizontal, X } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const ProductsPage = () => {
   const { products, loading } = useProducts();
@@ -28,7 +29,16 @@ const ProductsPage = () => {
   const [sort, setSort] = useState("");
 
   const [category, setCategory] = useState("all");
+
   const [priceRange, setPriceRange] = useState("all");
+
+  const [tempCategory, setTempCategory] = useState("all");
+
+  const [tempPriceRange, setTempPriceRange] = useState("all");
+
+  const [tempSort, setTempSort] = useState("");
+
+  const [openFilters, setOpenFilters] = useState(false);
 
   const categories = useMemo(() => {
     const unique = [...new Set(products.map((item) => item.category))];
@@ -103,102 +113,310 @@ const ProductsPage = () => {
             </div>
           </div>
         </div>
-        <div className="glass premium-shadow sticky top-24 z-20 flex flex-col gap-4 rounded-3xl border border-white/10 p-4 sm:p-5 lg:flex-row">
-          <div className="relative w-full">
-            <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+        <div className="glass premium-shadow sticky top-24 z-20 rounded-[2rem] border border-white/10 p-4">
+          {/* mobile */}
+          <div className="space-y-4 lg:hidden">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
 
-            <Input
-              placeholder="Search premium products..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="h-12 w-full rounded-2xl border-white/10 bg-background/50 pl-12"
-            />
+              <Input
+                placeholder="Search products..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="h-12 rounded-2xl border-white/10 bg-background/50 pl-12"
+              />
+            </div>
+
+            <div className="flex gap-3">
+              <Sheet open={openFilters} onOpenChange={setOpenFilters}>
+                <SheetTrigger asChild>
+                  <Button className="h-12 flex-1 rounded-2xl">
+                    <SlidersHorizontal className="mr-2 h-4 w-4" />
+                    Filters
+                  </Button>
+                </SheetTrigger>
+
+                <SheetContent className="glass w-full border-l border-white/10 bg-background/95 px-5 py-8 sm:max-w-md">
+                  <div className="flex h-full flex-col overflow-y-auto">
+                    <div className="mb-8">
+                      <h2 className="text-3xl font-black tracking-tight">
+                        Filters
+                      </h2>
+
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        Refine your shopping experience
+                      </p>
+                    </div>
+
+                    <div className="space-y-5">
+                      <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium">Category</label>
+
+                        <Select
+                          value={tempCategory}
+                          onValueChange={setTempCategory}
+                        >
+                          <SelectTrigger className="h-14 min-h-14 w-full rounded-2xl border border-white/10 bg-background/60 px-4 text-left text-base shadow-sm backdrop-blur-xl">
+                            <SelectValue placeholder="Category" />
+                          </SelectTrigger>
+
+                          <SelectContent
+                            position="popper"
+                            className="z-9999 rounded-2xl border border-white/10 bg-background/95 backdrop-blur-xl"
+                          >
+                            <SelectItem
+                              value="all"
+                              className="rounded-xl py-3 text-base"
+                            >
+                              All Categories
+                            </SelectItem>
+
+                            {categories.map((cat) => (
+                              <SelectItem
+                                key={cat}
+                                value={cat}
+                                className="rounded-xl py-3 text-base"
+                              >
+                                {cat}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium">
+                          Price Range
+                        </label>
+
+                        <Select
+                          value={tempPriceRange}
+                          onValueChange={setTempPriceRange}
+                        >
+                          <SelectTrigger className="h-14 min-h-14 w-full rounded-2xl border border-white/10 bg-background/60 px-4 text-left text-base shadow-sm backdrop-blur-xl">
+                            <SelectValue placeholder="Price Range" />
+                          </SelectTrigger>
+
+                          <SelectContent
+                            position="popper"
+                            className="z-9999 rounded-2xl border border-white/10 bg-background/95 backdrop-blur-xl"
+                          >
+                            <SelectItem
+                              value="all"
+                              className="rounded-xl py-3 text-base"
+                            >
+                              All Prices
+                            </SelectItem>
+
+                            <SelectItem
+                              value="under1000"
+                              className="rounded-xl py-3 text-base"
+                            >
+                              Under ₹1000
+                            </SelectItem>
+
+                            <SelectItem
+                              value="1000to5000"
+                              className="rounded-xl py-3 text-base"
+                            >
+                              ₹1000 - ₹5000
+                            </SelectItem>
+
+                            <SelectItem
+                              value="5000plus"
+                              className="rounded-xl py-3 text-base"
+                            >
+                              Above ₹5000
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium">
+                          Sort Products
+                        </label>
+
+                        <Select value={tempSort} onValueChange={setTempSort}>
+                          <SelectTrigger className="h-14 min-h-14 w-full rounded-2xl border border-white/10 bg-background/60 px-4 text-left text-base shadow-sm backdrop-blur-xl">
+                            <SelectValue placeholder="Sort By" />
+                          </SelectTrigger>
+
+                          <SelectContent
+                            position="popper"
+                            className="z-9999 rounded-2xl border border-white/10 bg-background/95 backdrop-blur-xl"
+                          >
+                            <SelectItem
+                              value="low"
+                              className="rounded-xl py-3 text-base"
+                            >
+                              Price Low to High
+                            </SelectItem>
+
+                            <SelectItem
+                              value="high"
+                              className="rounded-xl py-3 text-base"
+                            >
+                              Price High to Low
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="flex gap-3 pt-4">
+                        <Button
+                          className="h-12 flex-1 rounded-2xl"
+                          onClick={() => {
+                            setCategory(tempCategory);
+
+                            setPriceRange(tempPriceRange);
+
+                            setSort(tempSort);
+
+                            setOpenFilters(false);
+                          }}
+                        >
+                          Apply Filters
+                        </Button>
+
+                        <Button
+                          variant="outline"
+                          className="h-12 rounded-2xl border-white/10 px-5"
+                          onClick={() => {
+                            setCategory("all");
+                            setPriceRange("all");
+                            setSort("");
+
+                            setTempCategory("all");
+                            setTempPriceRange("all");
+                            setTempSort("");
+
+                            setSearch("");
+
+                            setOpenFilters(false);
+                          }}
+                        >
+                          Clear
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+
+              <Button
+                variant="outline"
+                className="h-12 rounded-2xl border-white/10 px-5"
+                onClick={() => {
+                  setSearch("");
+                  setCategory("all");
+                  setSort("");
+                  setPriceRange("all");
+                }}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
 
-          <Select value={category} onValueChange={setCategory}>
-            <SelectTrigger className="h-12 min-h-12 w-full rounded-2xl border-white/10 bg-background/50 lg:w-55">
-              <SelectValue placeholder="Category" />
-            </SelectTrigger>
+          {/* desktop */}
+          <div className="hidden items-center gap-4 lg:flex">
+            <div className="relative flex-1">
+              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
 
-            <SelectContent>
-              <SelectItem value="all">All Categories</SelectItem>
+              <Input
+                placeholder="Search premium products..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="h-12 rounded-2xl border-white/10 bg-background/50 pl-12"
+              />
+            </div>
 
-              {categories.map((cat) => (
-                <SelectItem key={cat} value={cat}>
-                  {cat}
+            <Select value={category} onValueChange={setCategory}>
+              <SelectTrigger className="h-12 min-h-12 w-[180px] rounded-2xl border-white/10 bg-background/50">
+                <SelectValue placeholder="Category" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectItem value="all" className="rounded-xl py-3 text-base">
+                  All Categories
                 </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
 
-          <Select value={priceRange} onValueChange={setPriceRange}>
-            <SelectTrigger className="h-12 min-h-12 w-full rounded-2xl border-white/10 bg-background/50 lg:w-55">
-              <SelectValue placeholder="Price Range" />
-            </SelectTrigger>
+                {categories.map((cat) => (
+                  <SelectItem
+                    key={cat}
+                    value={cat}
+                    className="rounded-xl py-3 text-base"
+                  >
+                    {cat}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-            <SelectContent>
-              <SelectItem value="all">All Prices</SelectItem>
+            <Select value={priceRange} onValueChange={setPriceRange}>
+              <SelectTrigger className="h-12 min-h-12 w-[180px] rounded-2xl border-white/10 bg-background/50">
+                <SelectValue placeholder="Price" />
+              </SelectTrigger>
 
-              <SelectItem value="under1000">Under ₹1000</SelectItem>
+              <SelectContent>
+                <SelectItem value="all" className="rounded-xl py-3 text-base">
+                  All Prices
+                </SelectItem>
 
-              <SelectItem value="1000to5000">₹1000 - ₹5000</SelectItem>
+                <SelectItem
+                  value="under1000"
+                  className="rounded-xl py-3 text-base"
+                >
+                  Under ₹1000
+                </SelectItem>
 
-              <SelectItem value="5000plus">Above ₹5000</SelectItem>
-            </SelectContent>
-          </Select>
+                <SelectItem
+                  value="1000to5000"
+                  className="rounded-xl py-3 text-base"
+                >
+                  ₹1000 - ₹5000
+                </SelectItem>
 
-          <Select value={sort} onValueChange={setSort}>
-            <SelectTrigger className="h-12 min-h-12 w-full rounded-2xl border-white/10 bg-background/50 lg:w-55">
-              <SelectValue placeholder="Sort By" />
-            </SelectTrigger>
+                <SelectItem
+                  value="5000plus"
+                  className="rounded-xl py-3 text-base"
+                >
+                  Above ₹5000
+                </SelectItem>
+              </SelectContent>
+            </Select>
 
-            <SelectContent>
-              <SelectItem value="low">Price Low to High</SelectItem>
+            <Select value={sort} onValueChange={setSort}>
+              <SelectTrigger className="h-12 min-h-12 w-[180px] rounded-2xl border-white/10 bg-background/50">
+                <SelectValue placeholder="Sort" />
+              </SelectTrigger>
 
-              <SelectItem value="high">Price High to Low</SelectItem>
-            </SelectContent>
-          </Select>
+              <SelectContent>
+                <SelectItem value="low" className="rounded-xl py-3 text-base">
+                  Low to High
+                </SelectItem>
 
-          <Button
-            variant="outline"
-            className="h-12 rounded-2xl border-white/10 bg-background/50"
-            onClick={() => {
-              setSearch("");
-              setCategory("all");
-              setSort("");
-              setPriceRange("all");
-            }}
-          >
-            <X className="mr-2 h-4 w-4" />
-            Clear
-          </Button>
-        </div>
+                <SelectItem value="high" className="rounded-xl py-3 text-base">
+                  High to Low
+                </SelectItem>
+              </SelectContent>
+            </Select>
 
-        <div className="flex flex-wrap gap-3">
-          <button
-            onClick={() => setCategory("all")}
-            className={`rounded-full px-5 py-2 text-sm font-medium transition ${
-              category === "all"
-                ? "bg-primary text-primary-foreground"
-                : "glass border border-white/10"
-            }`}
-          >
-            All
-          </button>
-
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setCategory(cat)}
-              className={`rounded-full px-5 py-2 text-sm font-medium capitalize transition ${
-                category === cat
-                  ? "bg-primary text-primary-foreground"
-                  : "glass border border-white/10"
-              }`}
+            <Button
+              variant="outline"
+              className="h-12 rounded-2xl border-white/10 px-5"
+              onClick={() => {
+                setSearch("");
+                setCategory("all");
+                setSort("");
+                setPriceRange("all");
+              }}
             >
-              {cat}
-            </button>
-          ))}
+              <X className="mr-2 h-4 w-4" />
+              Clear
+            </Button>
+          </div>
         </div>
 
         <motion.div

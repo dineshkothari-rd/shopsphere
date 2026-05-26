@@ -26,8 +26,6 @@ const AuthProvider = ({ children }) => {
 
           const userData = await getUserData(user.uid);
 
-          console.log("USER DATA", userData);
-
           queueMicrotask(() => {
             setUser(user);
             setUserData(userData);
