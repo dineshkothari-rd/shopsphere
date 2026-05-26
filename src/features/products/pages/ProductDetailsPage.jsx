@@ -15,7 +15,13 @@ import {
 } from "@/features/products/services/product.service";
 
 import { useCartStore } from "@/features/cart/store/useCartStore";
-import { ArrowLeft } from "lucide-react";
+import {
+  ArrowLeft,
+  BadgeCheck,
+  ShieldCheck,
+  Truck,
+  RotateCcw,
+} from "lucide-react";
 
 import { ReviewForm, ReviewsList } from "@/features/reviews";
 import ProductCard from "../components/ProductCard";
@@ -30,6 +36,13 @@ const ProductDetailsPage = () => {
 
   const [loading, setLoading] = useState(true);
   const [relatedProducts, setRelatedProducts] = useState([]);
+
+  const discountPercentage =
+    product?.comparePrice > product?.price
+      ? Math.round(
+          ((product.comparePrice - product.price) / product.comparePrice) * 100,
+        )
+      : 0;
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -125,13 +138,75 @@ const ProductDetailsPage = () => {
             transition={{
               duration: 0.5,
             }}
-            className="glass premium-shadow overflow-hidden rounded-[2rem] border border-white/10 p-5"
+            className="space-y-5"
           >
-            <img
-              src={product.image}
-              alt={product.title}
-              className="h-[600px] w-full rounded-[1.5rem] object-cover transition duration-700 hover:scale-105"
-            />
+            <div className="glass premium-shadow group overflow-hidden rounded-[2rem] border border-white/10 p-4">
+              <div className="relative overflow-hidden rounded-[1.5rem]">
+                {/* badges */}
+                <div className="absolute left-4 top-4 z-20 flex flex-wrap gap-2">
+                  {discountPercentage > 0 && (
+                    <span className="rounded-full bg-red-500 px-4 py-2 text-xs font-bold text-white shadow-lg">
+                      {discountPercentage}% OFF
+                    </span>
+                  )}
+
+                  {product.isNew && (
+                    <span className="rounded-full bg-blue-500 px-4 py-2 text-xs font-bold text-white shadow-lg">
+                      NEW
+                    </span>
+                  )}
+
+                  {product.isTrending && (
+                    <span className="rounded-full bg-orange-500 px-4 py-2 text-xs font-bold text-white shadow-lg">
+                      TRENDING
+                    </span>
+                  )}
+                </div>
+
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="h-[350px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[500px] lg:h-[650px]"
+                />
+              </div>
+            </div>
+
+            {/* highlights */}
+            <div className="grid gap-4 sm:grid-cols-3">
+              {[
+                {
+                  icon: Truck,
+                  title: "Free Delivery",
+                },
+
+                {
+                  icon: ShieldCheck,
+                  title: "Secure Payment",
+                },
+
+                {
+                  icon: RotateCcw,
+                  title: "Easy Returns",
+                },
+              ].map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <div
+                    key={item.title}
+                    className="glass flex items-center gap-3 rounded-2xl border border-white/10 p-4"
+                  >
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                      <Icon className="h-5 w-5" />
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-semibold">{item.title}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </motion.div>
 
           {/* details section */}
@@ -175,27 +250,81 @@ const ProductDetailsPage = () => {
               </div>
 
               {/* price */}
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black">
-                ₹{product.price}
-              </h2>
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center gap-3">
+                  <h2 className="text-3xl font-black sm:text-4xl lg:text-5xl">
+                    ₹{product.price}
+                  </h2>
+
+                  {product.comparePrice > product.price && (
+                    <span className="text-lg text-muted-foreground line-through sm:text-2xl">
+                      ₹{product.comparePrice}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3">
+                  {discountPercentage > 0 && (
+                    <span className="rounded-full bg-green-500/10 px-4 py-2 text-sm font-semibold text-green-500">
+                      Save {discountPercentage}%
+                    </span>
+                  )}
+
+                  {product.stock > 0 ? (
+                    <span className="rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+                      In Stock ({product.stock})
+                    </span>
+                  ) : (
+                    <span className="rounded-full bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-500">
+                      Out Of Stock
+                    </span>
+                  )}
+                </div>
+              </div>
 
               {/* buttons */}
               <div className="flex flex-col gap-4 sm:flex-row">
                 <Button
                   size="lg"
+                  disabled={product.stock <= 0}
                   className="h-14 flex-1 rounded-2xl text-base font-semibold"
                   onClick={() => addToCart(product)}
                 >
-                  Add To Cart
+                  {product.stock <= 0 ? "Out Of Stock" : "Add To Cart"}
                 </Button>
 
                 <Button
                   size="lg"
                   variant="outline"
+                  disabled={product.stock <= 0}
                   className="h-14 flex-1 rounded-2xl border-white/10 bg-background/50 text-base font-semibold backdrop-blur-xl"
                 >
                   Buy Now
                 </Button>
+              </div>
+              <div className="space-y-4 rounded-3xl border border-white/10 bg-background/40 p-6 backdrop-blur-xl">
+                <div className="flex items-center gap-3">
+                  <BadgeCheck className="h-6 w-6 text-primary" />
+
+                  <h2 className="text-xl font-bold">Available Offers</h2>
+                </div>
+
+                <div className="space-y-3">
+                  {[
+                    "10% instant discount on prepaid orders",
+                    "Free delivery on orders above ₹999",
+                    "Easy 7-day return policy",
+                  ].map((offer) => (
+                    <div
+                      key={offer}
+                      className="flex items-start gap-3 rounded-2xl border border-white/10 p-4"
+                    >
+                      <div className="mt-1 h-2 w-2 rounded-full bg-primary" />
+
+                      <p className="text-sm text-muted-foreground">{offer}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* product info */}

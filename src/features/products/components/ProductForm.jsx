@@ -17,6 +17,9 @@ const ProductForm = ({
     category: "",
     stock: "",
     image: "",
+    comparePrice: "",
+    isNew: false,
+    isTrending: false,
   });
 
   useEffect(() => {
@@ -73,8 +76,12 @@ const ProductForm = ({
 
     await onSubmit({
       ...formData,
+
       price: Number(formData.price),
+
       stock: Number(formData.stock),
+
+      comparePrice: Number(formData.comparePrice || 0),
     });
   };
 
@@ -145,6 +152,52 @@ const ProductForm = ({
               onChange={handleChange}
               className="h-12 rounded-2xl border-white/10 bg-background/50"
             />
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Compare Price</label>
+
+              <Input
+                type="number"
+                placeholder="Original price"
+                name="comparePrice"
+                value={formData.comparePrice}
+                onChange={handleChange}
+                className="h-12 rounded-2xl border-white/10 bg-background/50"
+              />
+            </div>
+
+            <div className="flex items-end gap-3 pb-1">
+              <label className="flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3">
+                <input
+                  type="checkbox"
+                  checked={formData.isNew}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      isNew: e.target.checked,
+                    }))
+                  }
+                />
+
+                <span className="text-sm font-medium">New Product</span>
+              </label>
+
+              <label className="flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3">
+                <input
+                  type="checkbox"
+                  checked={formData.isTrending}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      isTrending: e.target.checked,
+                    }))
+                  }
+                />
+
+                <span className="text-sm font-medium">Trending</span>
+              </label>
+            </div>
           </div>
         </div>
 
