@@ -31,6 +31,7 @@ const ProductDetailsPage = () => {
   const { id } = useParams();
 
   const addToCart = useCartStore((state) => state.addToCart);
+  const [activeImage, setActiveImage] = useState("");
 
   const [product, setProduct] = useState(null);
 
@@ -55,6 +56,7 @@ const ProductDetailsPage = () => {
 
         queueMicrotask(() => {
           setProduct(data);
+          setActiveImage(data.images?.[0] || data.image);
 
           setRelatedProducts(related);
 
@@ -170,10 +172,29 @@ const ProductDetailsPage = () => {
                 </div>
 
                 <img
-                  src={product.image}
+                  src={activeImage}
                   alt={product.title}
                   className="h-[300px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[500px] lg:h-[650px]"
                 />
+                <div className="grid grid-cols-4 gap-3">
+                  {(product.images || [product.image]).map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveImage(image)}
+                      className={`overflow-hidden rounded-2xl border transition ${
+                        activeImage === image
+                          ? "border-primary"
+                          : "border-white/10"
+                      }`}
+                    >
+                      <img
+                        src={image}
+                        alt={`thumb-${index}`}
+                        className="h-24 w-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
