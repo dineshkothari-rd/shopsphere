@@ -3,6 +3,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  onSnapshot,
   serverTimestamp,
   setDoc,
   updateDoc,
@@ -76,4 +77,15 @@ export const updateUserRole = async (userId, role) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const subscribeToUsers = (callback) => {
+  return onSnapshot(usersRef, (snapshot) => {
+    const users = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    callback(users);
+  });
 };

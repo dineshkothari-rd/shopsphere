@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import {
-  getAllUsers,
+  subscribeToUsers,
   updateUserRole,
 } from "@/features/auth/services/user.service";
 
@@ -13,33 +13,28 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ROLES } from "@/constants/roles";
+import { toast } from "sonner";
 
 const AdminUsersPage = () => {
   const [users, setUsers] = useState([]);
 
-  const fetchUsers = async () => {
-    try {
-      const data = await getAllUsers();
-
-      queueMicrotask(() => {
-        setUsers(data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    fetchUsers();
+    const unsubscribe = subscribeToUsers((data) => {
+      setUsers(data);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const handleRoleChange = async (userId, role) => {
     try {
       await updateUserRole(userId, role);
 
-      await fetchUsers();
+      toast.success("Role updated successfully");
     } catch (error) {
       console.log(error);
+
+      toast.error("Failed to update role");
     }
   };
 
