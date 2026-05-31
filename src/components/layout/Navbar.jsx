@@ -17,6 +17,7 @@ import {
   Package,
   ShoppingBag,
   LayoutDashboard,
+  UserRound,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
@@ -42,46 +43,70 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 px-2 py-3 sm:px-4">
-      <Container className="glass premium-shadow flex h-16 items-center justify-between rounded-2xl border border-white/10 px-4 sm:px-6">
+    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur-xl">
+      <Container className="flex h-16 items-center justify-between">
         <Link
           to="/"
-          className="gradient-text text-2xl font-black tracking-tight sm:text-3xl"
+          className="flex items-center gap-2 text-xl font-black tracking-tight sm:text-2xl"
         >
-          ShopSphere
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+            S
+          </span>
+          <span>ShopSphere</span>
         </Link>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-1 rounded-full border border-border/70 bg-card/80 p-1 md:flex">
           {userData?.role === "admin" && (
-            <Link to="/admin" className="text-sm font-medium">
+            <Link
+              to="/admin"
+              className="rounded-full px-4 py-2 text-sm font-semibold transition hover:bg-secondary"
+            >
               Dashboard
             </Link>
           )}
-          <Link to="/products" className="text-sm font-medium">
+          <Link
+            to="/products"
+            className="rounded-full px-4 py-2 text-sm font-semibold transition hover:bg-secondary"
+          >
             Products
           </Link>
           {user && (
             <>
-              <Link to="/orders" className="text-sm font-medium">
+              <Link
+                to="/orders"
+                className="rounded-full px-4 py-2 text-sm font-semibold transition hover:bg-secondary"
+              >
                 Orders
               </Link>
               <Link to="/wishlist" className="relative">
-                <Heart className="h-6 w-6" />
+                <span className="flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-secondary">
+                  <Heart className="h-5 w-5" />
+                </span>
 
                 {wishlist.length > 0 && (
-                  <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
                     {wishlist.length}
                   </span>
                 )}
               </Link>
-              <CartSheet />
             </>
           )}
+          {user && <CartSheet />}
 
+        </div>
+
+        <div className="hidden items-center gap-2 md:flex">
           <ThemeToggle />
 
           {user ? (
-            <Button onClick={handleLogout}>Logout</Button>
+            <Button
+              onClick={handleLogout}
+              variant="outline"
+              className="h-10 rounded-full"
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              Logout
+            </Button>
           ) : (
             <>
               <Button variant="outline" asChild>
@@ -94,11 +119,13 @@ const Navbar = () => {
             </>
           )}
         </div>
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center gap-2 md:hidden">
           {user && (
             <>
               <Link to="/wishlist" className="relative">
-                <Heart className="h-5 w-5" />
+                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-card">
+                  <Heart className="h-5 w-5" />
+                </span>
 
                 {wishlist.length > 0 && (
                   <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
@@ -118,7 +145,7 @@ const Navbar = () => {
               <Button
                 size="icon"
                 variant="outline"
-                className="rounded-xl border-white/10"
+                className="mobile-tap rounded-xl border-border/70 bg-card"
               >
                 <Menu className="h-5 w-5" />
               </Button>
@@ -126,30 +153,34 @@ const Navbar = () => {
 
             <SheetContent
               onOpenAutoFocus={(e) => e.preventDefault()}
-              className="glass w-[320px] border-white/10 p-0"
+              className="w-[320px] border-border/70 bg-card p-0"
             >
               <div className="flex h-full flex-col">
-                {/* top */}
-                <div className="border-b border-white/10 p-6">
-                  <h2 className="gradient-text text-3xl font-black">
-                    ShopSphere
-                  </h2>
+                <div className="border-b border-border/70 p-5">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary text-lg font-black text-primary-foreground">
+                      S
+                    </span>
 
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Premium ecommerce experience
-                  </p>
+                    <div>
+                      <h2 className="text-2xl font-black">ShopSphere</h2>
+
+                      <p className="text-sm text-muted-foreground">
+                        Modern ecommerce
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
-                {/* nav */}
                 <div className="flex-1 space-y-2 p-4">
                   {userData?.role === "admin" && (
                     <Link
                       to="/admin"
                       onClick={() => setOpen(false)}
-                      className={`flex items-center gap-3 rounded-2xl px-4 py-4 transition ${
+                      className={`flex items-center gap-3 rounded-xl px-4 py-4 transition ${
                         location.pathname.startsWith("/admin")
                           ? "bg-primary text-primary-foreground"
-                          : "hover:bg-white/5"
+                          : "hover:bg-secondary"
                       }`}
                     >
                       <LayoutDashboard className="h-5 w-5" />
@@ -160,10 +191,10 @@ const Navbar = () => {
                   <Link
                     to="/products"
                     onClick={() => setOpen(false)}
-                    className={`flex items-center gap-3 rounded-2xl px-4 py-4 transition ${
+                    className={`flex items-center gap-3 rounded-xl px-4 py-4 transition ${
                       location.pathname === "/products"
                         ? "bg-primary text-primary-foreground"
-                        : "hover:bg-white/5"
+                        : "hover:bg-secondary"
                     }`}
                   >
                     <ShoppingBag className="h-5 w-5" />
@@ -176,10 +207,10 @@ const Navbar = () => {
                       <Link
                         to="/orders"
                         onClick={() => setOpen(false)}
-                        className={`flex items-center gap-3 rounded-2xl px-4 py-4 transition ${
+                        className={`flex items-center gap-3 rounded-xl px-4 py-4 transition ${
                           location.pathname === "/orders"
                             ? "bg-primary text-primary-foreground"
-                            : "hover:bg-white/5"
+                            : "hover:bg-secondary"
                         }`}
                       >
                         <Package className="h-5 w-5" />
@@ -190,10 +221,10 @@ const Navbar = () => {
                       <Link
                         to="/wishlist"
                         onClick={() => setOpen(false)}
-                        className={`flex items-center justify-between rounded-2xl px-4 py-4 transition ${
+                        className={`flex items-center justify-between rounded-xl px-4 py-4 transition ${
                           location.pathname === "/wishlist"
                             ? "bg-primary text-primary-foreground"
-                            : "hover:bg-white/5"
+                            : "hover:bg-secondary"
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -210,10 +241,15 @@ const Navbar = () => {
                       </Link>
                     </>
                   )}
+                  {!user && (
+                    <div className="rounded-xl border border-border/70 bg-secondary/50 p-4">
+                      <UserRound className="mb-3 h-5 w-5 text-primary" />
+                      <p className="text-sm font-semibold">Sign in to save products and track orders.</p>
+                    </div>
+                  )}
                 </div>
 
-                {/* bottom */}
-                <div className="border-t border-white/10 p-4">
+                <div className="border-t border-border/70 p-4">
                   {user ? (
                     <Button
                       onClick={() => {
@@ -221,7 +257,7 @@ const Navbar = () => {
 
                         handleLogout();
                       }}
-                      className="h-12 w-full rounded-2xl bg-red-500 text-white hover:bg-red-600"
+                      className="h-12 w-full rounded-xl bg-red-500 text-white hover:bg-red-600"
                     >
                       <LogOut className="mr-2 h-5 w-5" />
                       Logout
@@ -231,14 +267,14 @@ const Navbar = () => {
                       <Button
                         variant="outline"
                         asChild
-                        className="h-12 rounded-2xl"
+                        className="h-12 rounded-xl"
                       >
                         <Link to="/login" onClick={() => setOpen(false)}>
                           Login
                         </Link>
                       </Button>
 
-                      <Button asChild className="h-12 rounded-2xl">
+                      <Button asChild className="h-12 rounded-xl">
                         <Link to="/register" onClick={() => setOpen(false)}>
                           Register
                         </Link>

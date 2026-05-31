@@ -91,13 +91,8 @@ const ProductDetailsPage = () => {
   }
 
   return (
-    <section className="relative overflow-hidden py-10">
-      {/* background blur */}
-      <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-
-      <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-purple-500/10 blur-3xl" />
-
-      <Container className="relative">
+    <section className="page-shell">
+      <Container>
         <div className="mb-8 flex items-center justify-between">
           <Button
             variant="outline"
@@ -108,7 +103,7 @@ const ProductDetailsPage = () => {
                 navigate("/products");
               }
             }}
-            className="glass h-11 rounded-2xl border border-white/10 px-5"
+            className="h-11 rounded-xl border-border/70 bg-card px-5"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back
@@ -148,8 +143,8 @@ const ProductDetailsPage = () => {
             }}
             className="space-y-5"
           >
-            <div className="glass premium-shadow group overflow-hidden rounded-[2rem] border border-white/10 p-4">
-              <div className="relative overflow-hidden rounded-[1.5rem]">
+            <div className="app-surface group overflow-hidden rounded-2xl p-2 sm:p-4">
+              <div className="relative overflow-hidden rounded-xl">
                 {/* badges */}
                 <div className="absolute left-4 top-4 z-20 flex flex-wrap gap-2">
                   {discountPercentage > 0 && (
@@ -184,7 +179,7 @@ const ProductDetailsPage = () => {
                       className={`overflow-hidden rounded-2xl border transition ${
                         activeImage === image
                           ? "border-primary"
-                          : "border-white/10"
+                          : "border-border/70"
                       }`}
                     >
                       <img
@@ -221,7 +216,7 @@ const ProductDetailsPage = () => {
                 return (
                   <div
                     key={item.title}
-                    className="glass flex items-center gap-3 rounded-2xl border border-white/10 p-4"
+                    className="app-surface flex items-center gap-3 rounded-2xl p-4"
                   >
                     <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
                       <Icon className="h-5 w-5" />
@@ -251,10 +246,10 @@ const ProductDetailsPage = () => {
             }}
             className="space-y-8 lg:sticky lg:top-28"
           >
-            <div className="glass premium-shadow space-y-5 rounded-[2rem] border border-white/10 p-4 sm:p-6 lg:p-8">
+            <div className="app-surface space-y-5 rounded-2xl p-4 sm:p-6 lg:p-8">
               {/* category + title */}
               <div className="space-y-5">
-                <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+                <div className="eyebrow">
                   {product.category}
                 </div>
 
@@ -314,7 +309,7 @@ const ProductDetailsPage = () => {
                 <Button
                   size="lg"
                   disabled={product.stock <= 0}
-                  className="h-14 flex-1 rounded-2xl text-base font-semibold"
+                  className="h-14 flex-1 rounded-xl text-base font-semibold"
                   onClick={() => addToCart(product)}
                 >
                   {product.stock <= 0 ? "Out Of Stock" : "Add To Cart"}
@@ -329,12 +324,12 @@ const ProductDetailsPage = () => {
 
                     navigate("/checkout");
                   }}
-                  className="h-14 flex-1 rounded-2xl border-white/10 bg-background/50 text-base font-semibold backdrop-blur-xl"
+                  className="h-14 flex-1 rounded-xl border-border/70 bg-background/70 text-base font-semibold"
                 >
                   Buy Now
                 </Button>
               </div>
-              <div className="space-y-4 rounded-3xl border border-white/10 bg-background/40 p-6 backdrop-blur-xl">
+              <div className="space-y-4 rounded-2xl border border-border/70 bg-background/60 p-6">
                 <div className="flex items-center gap-3">
                   <BadgeCheck className="h-6 w-6 text-primary" />
 
@@ -349,7 +344,7 @@ const ProductDetailsPage = () => {
                   ].map((offer) => (
                     <div
                       key={offer}
-                      className="flex items-start gap-3 rounded-2xl border border-white/10 p-4"
+                    className="flex items-start gap-3 rounded-xl border border-border/70 p-4"
                     >
                       <div className="mt-1 h-2 w-2 rounded-full bg-primary" />
 
@@ -360,7 +355,7 @@ const ProductDetailsPage = () => {
               </div>
 
               {/* product info */}
-              <div className="rounded-3xl border border-white/10 bg-background/40 p-6 backdrop-blur-xl">
+              <div className="rounded-2xl border border-border/70 bg-background/60 p-6">
                 <h2 className="mb-4 text-xl font-semibold">
                   Product Information
                 </h2>
@@ -385,7 +380,7 @@ const ProductDetailsPage = () => {
       {relatedProducts.length > 0 && (
         <Container className="relative mt-24">
           <div className="mb-10 space-y-3">
-            <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+            <div className="eyebrow">
               Recommended
             </div>
 

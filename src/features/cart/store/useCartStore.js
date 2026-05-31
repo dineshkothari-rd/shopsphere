@@ -11,13 +11,14 @@ export const useCartStore = create((set, get) => ({
 
   addToCart: (product) => {
     const existingItem = get().cartItems.find((item) => item.id === product.id);
+    const stock = Number(product.stock ?? Infinity);
 
     const updatedCart = existingItem
       ? get().cartItems.map((item) =>
           item.id === product.id
             ? {
                 ...item,
-                quantity: item.quantity + 1,
+                quantity: Math.min(item.quantity + 1, stock),
               }
             : item,
         )
@@ -25,6 +26,7 @@ export const useCartStore = create((set, get) => ({
           ...get().cartItems,
           {
             ...product,
+            image: product.image || product.images?.[0] || "",
             quantity: 1,
           },
         ];
@@ -47,7 +49,7 @@ export const useCartStore = create((set, get) => ({
       item.id === id
         ? {
             ...item,
-            quantity: item.quantity + 1,
+            quantity: Math.min(item.quantity + 1, Number(item.stock ?? Infinity)),
           }
         : item,
     );

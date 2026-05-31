@@ -56,7 +56,7 @@ const ReviewForm = ({ productId }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="glass premium-shadow space-y-6 rounded-[2rem] border border-white/10 p-5 sm:p-8"
+      className="app-surface space-y-6 rounded-2xl p-5 sm:p-8"
     >
       <h2 className="text-2xl font-black tracking-tight">Write a Review</h2>
 
@@ -89,13 +89,13 @@ const ReviewForm = ({ productId }) => {
         placeholder="Write your review..."
         value={review}
         onChange={(e) => setReview(e.target.value)}
-        className="min-h-[140px] rounded-3xl border-white/10 bg-background/50 p-5"
+        className="min-h-[140px] rounded-2xl border-border/70 bg-background/70 p-5"
       />
 
       <Button
         type="submit"
         disabled={loading}
-        className="h-14 rounded-2xl px-8 text-base font-semibold"
+        className="h-14 rounded-xl px-8 text-base font-semibold"
       >
         {loading ? "Submitting..." : "Submit Review"}
       </Button>

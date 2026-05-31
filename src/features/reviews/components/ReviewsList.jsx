@@ -28,7 +28,7 @@ const ReviewsList = ({ productId }) => {
 
   return (
     <div className="space-y-6">
-      <div className="glass premium-shadow rounded-[2rem] border border-white/10 p-5 sm:p-8">
+      <div className="app-surface rounded-2xl p-5 sm:p-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
           <div className="text-4xl font-black sm:text-5xl">{averageRating}</div>
 
@@ -64,10 +64,10 @@ const ReviewsList = ({ productId }) => {
             opacity: 1,
             y: 0,
           }}
-          className="glass premium-shadow rounded-[2rem] border border-white/10 p-5 sm:p-6"
+          className="soft-card p-5 sm:p-6"
         >
           <div className="flex items-start gap-4">
-            <div className="glass flex h-12 w-12 items-center justify-center rounded-full text-lg font-black">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-lg font-black text-primary">
               {review.userEmail?.charAt(0).toUpperCase()}
             </div>
 

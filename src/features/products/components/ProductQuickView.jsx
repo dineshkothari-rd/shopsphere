@@ -18,17 +18,19 @@ const ProductQuickView = ({ open, onOpenChange, product }) => {
 
   if (!product) return null;
 
+  const productImage = product.image || product.images?.[0] || "";
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
-        className="glass max-h-[100dvh] overflow-y-auto rounded-t-[2rem] border border-white/10 p-0 sm:max-w-5xl"
+        className="max-h-[100dvh] overflow-y-auto rounded-t-3xl border border-border/70 bg-card p-0 sm:max-w-5xl sm:rounded-3xl"
       >
         <div className="grid gap-0 lg:grid-cols-2">
           {/* image */}
           <div className="relative overflow-hidden">
             <img
-              src={product.image}
+              src={productImage}
               alt={product.title}
               className="h-[260px] w-full object-cover sm:h-[350px] lg:h-full"
             />
@@ -37,7 +39,7 @@ const ProductQuickView = ({ open, onOpenChange, product }) => {
           {/* content */}
           <div className="space-y-5 p-4 sm:p-8">
             <DialogHeader className="space-y-4 text-left">
-              <div className="inline-flex w-max rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+              <div className="eyebrow">
                 {product.category}
               </div>
 
@@ -82,15 +84,17 @@ const ProductQuickView = ({ open, onOpenChange, product }) => {
             {/* actions */}
             <div className="flex flex-col gap-3 sm:flex-row">
               <Button
-                className="h-12 flex-1 rounded-2xl text-base font-semibold"
+                disabled={product.stock <= 0}
+                className="h-12 flex-1 rounded-xl text-base font-semibold"
                 onClick={() => addToCart(product)}
               >
-                Add To Cart
+                {product.stock <= 0 ? "Out Of Stock" : "Add To Cart"}
               </Button>
 
               <Button
                 variant="outline"
-                className="h-12 rounded-2xl border-white/10"
+                disabled={product.stock <= 0}
+                className="h-12 rounded-xl border-border/70"
                 onClick={() => {
                   addToCart(product);
 
@@ -109,7 +113,7 @@ const ProductQuickView = ({ open, onOpenChange, product }) => {
                 (item) => (
                   <div
                     key={item}
-                    className="glass rounded-2xl border border-white/10 p-4 text-center text-sm font-medium"
+                    className="rounded-xl border border-border/70 bg-secondary/60 p-4 text-center text-sm font-medium"
                   >
                     {item}
                   </div>

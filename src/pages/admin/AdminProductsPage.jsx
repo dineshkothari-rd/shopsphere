@@ -6,7 +6,7 @@ const AdminProductsPage = () => {
     <div className="space-y-8 p-4 sm:p-6 lg:p-8">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
+          <h1 className="page-title">
             Products
           </h1>
 

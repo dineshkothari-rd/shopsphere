@@ -46,7 +46,7 @@ const SalesChart = () => {
         opacity: 1,
         y: 0,
       }}
-      className="glass premium-shadow rounded-[2rem] border border-white/10 p-4 sm:p-6"
+      className="soft-card p-4 sm:p-6"
     >
       <h2 className="mb-6 text-2xl font-black tracking-tight">
         Revenue Overview

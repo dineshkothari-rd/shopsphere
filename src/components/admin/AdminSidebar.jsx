@@ -18,15 +18,15 @@ import { LogOut } from "lucide-react";
 const SidebarContent = ({ pathname, onNavigate, onLogout }) => {
   return (
     <>
-      <div className="flex h-16 items-center border-b border-white/10 px-6">
-        <h1 className="gradient-text text-2xl font-black">Admin Panel</h1>
+      <div className="flex h-16 items-center border-b border-border/70 px-6">
+        <h1 className="text-2xl font-black">Admin Panel</h1>
       </div>
 
       <nav className="space-y-2 p-4">
         <Link
           to="/"
           onClick={onNavigate}
-          className="mb-4 flex items-center gap-3 rounded-2xl border border-primary/20 bg-primary/10 px-4 py-3 text-primary transition hover:bg-primary/20"
+          className="mb-4 flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/10 px-4 py-3 text-primary transition hover:bg-primary/20"
         >
           <ExternalLink className="h-5 w-5" />
 
@@ -41,10 +41,10 @@ const SidebarContent = ({ pathname, onNavigate, onLogout }) => {
             <Link
               key={link.href}
               to={link.href}
-              className={`flex items-center gap-3 rounded-2xl px-4 py-3 transition-all duration-300 ${
+              className={`flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 ${
                 active
                   ? "bg-primary text-primary-foreground shadow-lg"
-                  : "hover:bg-white/5"
+                  : "hover:bg-secondary"
               }`}
               onClick={onNavigate}
             >
@@ -59,7 +59,7 @@ const SidebarContent = ({ pathname, onNavigate, onLogout }) => {
         <Button
           variant="outline"
           onClick={onLogout}
-          className="h-12 w-full justify-start rounded-2xl border-red-500/20 bg-red-500/10 text-red-500 hover:bg-red-500/20 hover:text-red-500"
+          className="h-12 w-full justify-start rounded-xl border-red-500/20 bg-red-500/10 text-red-500 hover:bg-red-500/20 hover:text-red-500"
         >
           <LogOut className="mr-2 h-5 w-5" />
           Logout
@@ -90,15 +90,15 @@ const AdminSidebar = () => {
   return (
     <>
       {/* mobile navbar */}
-      <div className="glass sticky top-0 z-50 flex h-16 items-center justify-between border-b border-white/10 px-4 lg:hidden">
-        <h1 className="gradient-text text-2xl font-black">Admin</h1>
+      <div className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-border/70 bg-background/85 px-4 backdrop-blur-xl lg:hidden">
+        <h1 className="text-2xl font-black">Admin</h1>
 
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <Button
               size="icon"
               variant="outline"
-              className="rounded-xl border-white/10"
+              className="rounded-xl border-border/70 bg-card"
             >
               <Menu className="h-5 w-5" />
             </Button>
@@ -106,7 +106,7 @@ const AdminSidebar = () => {
 
           <SheetContent
             onOpenAutoFocus={(e) => e.preventDefault()}
-            className="glass border-white/10 p-0"
+            className="border-border/70 bg-card p-0"
           >
             <SidebarContent
               pathname={location.pathname}
@@ -118,8 +118,12 @@ const AdminSidebar = () => {
       </div>
 
       {/* desktop sidebar */}
-      <aside className="glass premium-shadow fixed left-0 top-0 hidden h-screen w-72 border-r border-white/10 lg:block">
-        <SidebarContent pathname={location.pathname} />
+      <aside className="fixed left-0 top-0 hidden h-screen w-72 border-r border-border/70 bg-card/90 shadow-sm backdrop-blur-xl lg:block">
+        <SidebarContent
+          pathname={location.pathname}
+          onNavigate={() => {}}
+          onLogout={handleLogout}
+        />
       </aside>
     </>
   );

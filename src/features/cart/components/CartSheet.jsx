@@ -36,6 +36,8 @@ const CartSheet = () => {
     0,
   );
 
+  const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       {/* trigger */}
@@ -43,13 +45,13 @@ const CartSheet = () => {
         <Button
           variant="outline"
           size="icon"
-          className="glass relative rounded-2xl border-white/10"
+          className="relative rounded-full border-border/70 bg-card"
         >
           <ShoppingCart className="h-5 w-5" />
 
-          {cartItems.length > 0 && (
+          {itemCount > 0 && (
             <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
-              {cartItems.length}
+              {itemCount}
             </span>
           )}
         </Button>
@@ -58,12 +60,12 @@ const CartSheet = () => {
       {/* sheet */}
       <SheetContent
         onOpenAutoFocus={(e) => e.preventDefault()}
-        className="glass flex w-full flex-col border-white/10 sm:max-w-lg"
+        className="flex w-full flex-col border-border/70 bg-card sm:max-w-lg"
       >
         {/* header */}
-        <SheetHeader className="border-b border-white/10 pb-6">
+        <SheetHeader className="border-b border-border/70 pb-6">
           <div className="space-y-2">
-            <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+            <div className="eyebrow">
               Shopping Cart
             </div>
 
@@ -78,10 +80,10 @@ const CartSheet = () => {
                 </p>
               </div>
 
-              <div className="glass rounded-2xl px-4 py-3">
+              <div className="rounded-2xl border border-border/70 bg-secondary/70 px-4 py-3">
                 <p className="text-sm text-muted-foreground">Items</p>
 
-                <h3 className="text-2xl font-black">{cartItems.length}</h3>
+                <h3 className="text-2xl font-black">{itemCount}</h3>
               </div>
             </div>
           </div>
@@ -91,7 +93,7 @@ const CartSheet = () => {
         <div className="mt-6 flex-1 overflow-y-auto">
           {cartItems.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-center">
-              <div className="glass mb-6 flex h-28 w-28 items-center justify-center rounded-full text-3xl sm:text-4xl lg:text-5xl">
+              <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-3xl bg-primary/10 text-3xl text-primary sm:text-4xl lg:text-5xl">
                 🛒
               </div>
 
@@ -119,11 +121,11 @@ const CartSheet = () => {
                     opacity: 0,
                     scale: 0.95,
                   }}
-                  className="glass premium-shadow flex gap-3 rounded-2xl border border-white/10 p-3"
+                  className="flex gap-3 rounded-2xl border border-border/70 bg-background/60 p-3"
                 >
                   {/* image */}
                   <img
-                    src={item.image}
+                    src={item.image || item.images?.[0]}
                     alt={item.title}
                     className="h-20 w-20 rounded-2xl object-cover"
                   />
@@ -145,7 +147,7 @@ const CartSheet = () => {
                       <div className="flex items-center gap-3">
                         <button
                           onClick={() => decreaseQuantity(item.id)}
-                          className="glass flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 transition hover:scale-105"
+                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-border/70 bg-card transition hover:scale-105"
                         >
                           <Minus className="h-4 w-4" />
                         </button>
@@ -156,7 +158,7 @@ const CartSheet = () => {
 
                         <button
                           onClick={() => increaseQuantity(item.id)}
-                          className="glass flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 transition hover:scale-105"
+                          className="flex h-9 w-9 items-center justify-center rounded-xl border border-border/70 bg-card transition hover:scale-105"
                         >
                           <Plus className="h-4 w-4" />
                         </button>
@@ -179,7 +181,7 @@ const CartSheet = () => {
 
         {/* footer */}
         {cartItems.length > 0 && (
-          <div className="glass premium-shadow mt-6 space-y-6 rounded-[2rem] border border-white/10 p-6">
+          <div className="mt-6 space-y-6 rounded-2xl border border-border/70 bg-background/70 p-6">
             <div className="flex items-center justify-between">
               <p className="text-lg text-muted-foreground">Total</p>
 
@@ -189,7 +191,7 @@ const CartSheet = () => {
             </div>
 
             <Button
-              className="h-14 w-full rounded-2xl text-base font-semibold"
+              className="h-14 w-full rounded-xl text-base font-semibold"
               onClick={() => {
                 setOpen(false);
 

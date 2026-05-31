@@ -4,11 +4,16 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className=" border-t border-white/10 py-14">
+    <footer className="border-t border-border/70 bg-card/70 py-10 sm:py-14">
       <Container>
         <div className="grid gap-10 md:grid-cols-4">
           <div>
-            <h2 className="gradient-text text-3xl font-black">ShopSphere</h2>
+            <Link to="/" className="flex items-center gap-2 text-2xl font-black">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+                S
+              </span>
+              ShopSphere
+            </Link>
 
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
               Premium ecommerce experience with modern UI, realtime shopping,
@@ -55,7 +60,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-white/10 pt-6 text-center text-sm text-muted-foreground">
+        <div className="mt-10 border-t border-border/70 pt-6 text-center text-sm text-muted-foreground">
           © 2026 ShopSphere. All rights reserved.
         </div>
       </Container>

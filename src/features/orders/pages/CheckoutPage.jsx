@@ -17,6 +17,7 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
 
   const user = useAuthStore((state) => state.user);
+  const authLoading = useAuthStore((state) => state.loading);
 
   const cartItems = useCartStore((state) => state.cartItems);
 
@@ -36,22 +37,49 @@ const CheckoutPage = () => {
   );
 
   useEffect(() => {
-    if (!cartItems.length) {
-      navigate("/products");
+    if (authLoading) return;
+
+    if (!user) {
+      navigate("/login", { replace: true });
+      return;
     }
-  }, [cartItems]);
+
+    if (!cartItems.length) {
+      navigate("/products", { replace: true });
+    }
+  }, [authLoading, cartItems.length, navigate, user]);
 
   const handlePlaceOrder = async () => {
+    const trimmedName = name.trim();
+    const trimmedPhone = phone.trim();
+    const trimmedAddress = address.trim();
+
+    if (!trimmedName || !trimmedPhone || !trimmedAddress) {
+      toast.error("Please fill all delivery details");
+      return;
+    }
+
+    if (!/^[0-9+\-\s()]{7,15}$/.test(trimmedPhone)) {
+      toast.error("Please enter a valid contact number");
+      return;
+    }
+
+    if (!user) {
+      toast.error("Please login to place your order");
+      navigate("/login", { replace: true });
+      return;
+    }
+
     try {
       setLoading(true);
 
       await createOrder({
         userId: user.uid,
         userEmail: user.email,
-        name,
-        phone,
+        name: trimmedName,
+        phone: trimmedPhone,
         items: cartItems,
-        address,
+        address: trimmedAddress,
         total,
       });
 
@@ -62,40 +90,47 @@ const CheckoutPage = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
+
+      toast.error(error.message || "Failed to place order");
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <section className="relative overflow-hidden py-8 sm:py-10">
-      <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+  if (authLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
 
-      <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-purple-500/10 blur-3xl" />
-      <Container className="relative">
+  return (
+    <section className="page-shell">
+      <Container>
         <div className="grid gap-6 lg:gap-8 lg:grid-cols-[1fr_420px]">
-          <div className="glass premium-shadow space-y-6 rounded-[2rem] border border-white/10 p-5 sm:p-8">
-            <h1 className="text-3xl font-black tracking-tight sm:text-4xl">
+          <div className="app-surface space-y-6 rounded-2xl p-5 sm:p-8">
+            <h1 className="page-title">
               Checkout
             </h1>
             <Input
               placeholder="Enter full name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="h-14 rounded-2xl border-white/10 bg-background/50"
+              className="h-14 rounded-xl border-border/70 bg-background/70"
             />
 
             <Input
               placeholder="Enter contact number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="h-14 rounded-2xl border-white/10 bg-background/50"
+              className="h-14 rounded-xl border-border/70 bg-background/70"
             />
             <Input
               placeholder="Enter delivery address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className="h-14 rounded-2xl border-white/10 bg-background/50"
+              className="h-14 rounded-xl border-border/70 bg-background/70"
             />
 
             <Button
@@ -107,7 +142,7 @@ const CheckoutPage = () => {
             </Button>
           </div>
 
-          <div className="glass premium-shadow h-fit space-y-5 rounded-[2rem] border border-white/10 p-5 sm:p-8 lg:sticky lg:top-28">
+          <div className="app-surface h-fit space-y-5 rounded-2xl p-5 sm:p-8 lg:sticky lg:top-28">
             <h2 className="text-2xl font-black">Order Summary</h2>
 
             {cartItems.map((item) => (
@@ -124,7 +159,7 @@ const CheckoutPage = () => {
               </div>
             ))}
 
-            <div className="border-t border-white/10 pt-5 text-2xl font-black">
+            <div className="border-t border-border/70 pt-5 text-2xl font-black">
               Total: ₹{total.toFixed(2)}
             </div>
           </div>

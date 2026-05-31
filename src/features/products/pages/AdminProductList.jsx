@@ -50,11 +50,11 @@ const AdminProductList = () => {
       {products.map((product) => (
         <div
           key={product.id}
-          className="glass premium-shadow flex flex-col gap-5 rounded-[2rem] border border-white/10 p-5 lg:flex-row lg:items-center lg:justify-between"
+          className="soft-card flex flex-col gap-5 p-5 lg:flex-row lg:items-center lg:justify-between"
         >
           <div className="flex items-center gap-4">
             <img
-              src={product.image}
+              src={product.image || product.images?.[0]}
               alt={product.title}
               className="h-20 w-20 rounded-2xl object-cover"
             />
