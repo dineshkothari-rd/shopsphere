@@ -41,7 +41,9 @@ const ProductsPage = () => {
   const [openFilters, setOpenFilters] = useState(false);
 
   const categories = useMemo(() => {
-    const unique = [...new Set(products.map((item) => item.category))];
+    const unique = [
+      ...new Set(products.map((item) => item.category).filter(Boolean)),
+    ];
 
     return unique;
   }, [products]);
@@ -82,7 +84,7 @@ const ProductsPage = () => {
     }
 
     return filtered;
-  }, [products, search, sort, category]);
+  }, [products, search, sort, category, priceRange]);
 
   const resetFilters = () => {
     setSearch("");

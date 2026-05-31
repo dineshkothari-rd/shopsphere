@@ -17,6 +17,7 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
 
   const user = useAuthStore((state) => state.user);
+  const authLoading = useAuthStore((state) => state.loading);
 
   const cartItems = useCartStore((state) => state.cartItems);
 
@@ -36,22 +37,49 @@ const CheckoutPage = () => {
   );
 
   useEffect(() => {
-    if (!cartItems.length) {
-      navigate("/products");
+    if (authLoading) return;
+
+    if (!user) {
+      navigate("/login", { replace: true });
+      return;
     }
-  }, [cartItems]);
+
+    if (!cartItems.length) {
+      navigate("/products", { replace: true });
+    }
+  }, [authLoading, cartItems.length, navigate, user]);
 
   const handlePlaceOrder = async () => {
+    const trimmedName = name.trim();
+    const trimmedPhone = phone.trim();
+    const trimmedAddress = address.trim();
+
+    if (!trimmedName || !trimmedPhone || !trimmedAddress) {
+      toast.error("Please fill all delivery details");
+      return;
+    }
+
+    if (!/^[0-9+\-\s()]{7,15}$/.test(trimmedPhone)) {
+      toast.error("Please enter a valid contact number");
+      return;
+    }
+
+    if (!user) {
+      toast.error("Please login to place your order");
+      navigate("/login", { replace: true });
+      return;
+    }
+
     try {
       setLoading(true);
 
       await createOrder({
         userId: user.uid,
         userEmail: user.email,
-        name,
-        phone,
+        name: trimmedName,
+        phone: trimmedPhone,
         items: cartItems,
-        address,
+        address: trimmedAddress,
         total,
       });
 
@@ -62,10 +90,20 @@ const CheckoutPage = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
+
+      toast.error(error.message || "Failed to place order");
     } finally {
       setLoading(false);
     }
   };
+
+  if (authLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <section className="relative overflow-hidden py-8 sm:py-10">

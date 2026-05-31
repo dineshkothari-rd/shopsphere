@@ -18,6 +18,8 @@ const ProductQuickView = ({ open, onOpenChange, product }) => {
 
   if (!product) return null;
 
+  const productImage = product.image || product.images?.[0] || "";
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -28,7 +30,7 @@ const ProductQuickView = ({ open, onOpenChange, product }) => {
           {/* image */}
           <div className="relative overflow-hidden">
             <img
-              src={product.image}
+              src={productImage}
               alt={product.title}
               className="h-[260px] w-full object-cover sm:h-[350px] lg:h-full"
             />
@@ -82,14 +84,16 @@ const ProductQuickView = ({ open, onOpenChange, product }) => {
             {/* actions */}
             <div className="flex flex-col gap-3 sm:flex-row">
               <Button
+                disabled={product.stock <= 0}
                 className="h-12 flex-1 rounded-2xl text-base font-semibold"
                 onClick={() => addToCart(product)}
               >
-                Add To Cart
+                {product.stock <= 0 ? "Out Of Stock" : "Add To Cart"}
               </Button>
 
               <Button
                 variant="outline"
+                disabled={product.stock <= 0}
                 className="h-12 rounded-2xl border-white/10"
                 onClick={() => {
                   addToCart(product);

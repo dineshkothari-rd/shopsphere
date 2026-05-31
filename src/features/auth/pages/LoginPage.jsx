@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,8 @@ import { toast } from "sonner";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectTo = location.state?.from?.pathname || "/";
 
   const [formData, setFormData] = useState({
     email: "",
@@ -33,7 +35,7 @@ const LoginPage = () => {
 
       await loginUser(formData.email, formData.password);
 
-      navigate("/");
+      navigate(redirectTo, { replace: true });
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -45,7 +47,7 @@ const LoginPage = () => {
     try {
       await googleLogin();
 
-      navigate("/");
+      navigate(redirectTo, { replace: true });
     } catch (error) {
       console.log(error);
     }

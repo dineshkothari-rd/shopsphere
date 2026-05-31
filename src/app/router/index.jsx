@@ -13,6 +13,7 @@ import { DashboardPage } from "@/features/dashboard";
 import { ROUTES } from "@/constants/routes";
 import WishlistPage from "@/features/wishlist/pages/WishlistPage";
 import HomePage from "@/features/dashboard/pages/HomePage";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -33,15 +34,27 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.CHECKOUT,
-        element: <CheckoutPage />,
+        element: (
+          <ProtectedRoute>
+            <CheckoutPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: ROUTES.ORDERS,
-        element: <OrdersPage />,
+        element: (
+          <ProtectedRoute>
+            <OrdersPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: ROUTES.WISHLIST,
-        element: <WishlistPage />,
+        element: (
+          <ProtectedRoute>
+            <WishlistPage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

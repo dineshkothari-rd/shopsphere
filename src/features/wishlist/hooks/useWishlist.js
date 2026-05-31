@@ -8,13 +8,25 @@ export const useWishlist = () => {
   const user = useAuthStore((state) => state.user);
 
   const [wishlist, setWishlist] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      queueMicrotask(() => {
+        setWishlist([]);
+        setLoading(false);
+      });
+      return;
+    }
+
+    queueMicrotask(() => {
+      setLoading(true);
+    });
 
     const unsubscribe = subscribeToWishlist(user.uid, (data) => {
       queueMicrotask(() => {
         setWishlist(data);
+        setLoading(false);
       });
     });
 
@@ -23,5 +35,6 @@ export const useWishlist = () => {
 
   return {
     wishlist,
+    loading,
   };
 };

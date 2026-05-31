@@ -19,6 +19,8 @@ import ProductQuickView from "@/features/products/components/ProductQuickView";
 import { useState } from "react";
 
 const ProductCard = ({ product }) => {
+  const productId = product.productId || product.id;
+  const productImage = product.image || product.images?.[0] || "";
   const [adding, setAdding] = useState(false);
   const [openQuickView, setOpenQuickView] = useState(false);
   const addToCart = useCartStore((state) => state.addToCart);
@@ -26,7 +28,7 @@ const ProductCard = ({ product }) => {
 
   const { wishlist } = useWishlist();
 
-  const wishlistItem = wishlist.find((item) => item.productId === product.id);
+  const wishlistItem = wishlist.find((item) => item.productId === productId);
 
   const isWishlisted = !!wishlistItem;
 
@@ -51,13 +53,27 @@ const ProductCard = ({ product }) => {
         await addToWishlist({
           userId: user.uid,
 
-          productId: product.id,
+          productId,
 
           title: product.title,
 
-          image: product.image,
+          image: productImage,
 
           price: product.price,
+
+          description: product.description || "",
+
+          category: product.category || "",
+
+          stock: Number(product.stock || 0),
+
+          comparePrice: Number(product.comparePrice || 0),
+
+          images: product.images || (productImage ? [productImage] : []),
+
+          isNew: !!product.isNew,
+
+          isTrending: !!product.isTrending,
         });
 
         toast.success("Added to wishlist");
@@ -80,7 +96,7 @@ const ProductCard = ({ product }) => {
         }}
       >
         <Card className="glass premium-shadow overflow-hidden rounded-[1.5rem] border border-white/10 transition-all duration-300">
-          <Link to={`/products/${product.id}`}>
+          <Link to={`/products/${productId}`}>
             <div className="relative aspect-[4/4.2] overflow-hidden bg-muted sm:aspect-square">
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
               <div className="absolute left-3 top-3 z-10 flex flex-wrap gap-2">
@@ -103,7 +119,7 @@ const ProductCard = ({ product }) => {
                 )}
               </div>
               <img
-                src={product.image}
+                src={productImage}
                 alt={product.title}
                 className="h-full w-full object-cover transition duration-700 hover:scale-105"
               />
@@ -189,7 +205,11 @@ const ProductCard = ({ product }) => {
               onClick={() => {
                 setAdding(true);
 
-                addToCart(product);
+                addToCart({
+                  ...product,
+                  id: productId,
+                  image: productImage,
+                });
 
                 setTimeout(() => {
                   setAdding(false);

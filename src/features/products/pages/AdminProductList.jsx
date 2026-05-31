@@ -54,7 +54,7 @@ const AdminProductList = () => {
         >
           <div className="flex items-center gap-4">
             <img
-              src={product.image}
+              src={product.image || product.images?.[0]}
               alt={product.title}
               className="h-20 w-20 rounded-2xl object-cover"
             />

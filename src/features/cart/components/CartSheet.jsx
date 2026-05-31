@@ -36,6 +36,8 @@ const CartSheet = () => {
     0,
   );
 
+  const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       {/* trigger */}
@@ -47,9 +49,9 @@ const CartSheet = () => {
         >
           <ShoppingCart className="h-5 w-5" />
 
-          {cartItems.length > 0 && (
+          {itemCount > 0 && (
             <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
-              {cartItems.length}
+              {itemCount}
             </span>
           )}
         </Button>
@@ -81,7 +83,7 @@ const CartSheet = () => {
               <div className="glass rounded-2xl px-4 py-3">
                 <p className="text-sm text-muted-foreground">Items</p>
 
-                <h3 className="text-2xl font-black">{cartItems.length}</h3>
+                <h3 className="text-2xl font-black">{itemCount}</h3>
               </div>
             </div>
           </div>
@@ -123,7 +125,7 @@ const CartSheet = () => {
                 >
                   {/* image */}
                   <img
-                    src={item.image}
+                    src={item.image || item.images?.[0]}
                     alt={item.title}
                     className="h-20 w-20 rounded-2xl object-cover"
                   />
