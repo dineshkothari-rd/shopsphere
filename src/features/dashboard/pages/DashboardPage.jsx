@@ -31,7 +31,7 @@ const DashboardPage = () => {
   return (
     <div className="space-y-6 p-4 sm:p-6 lg:space-y-8 lg:p-8">
       <div>
-        <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
+        <h1 className="page-title">
           Dashboard
         </h1>
 
@@ -45,7 +45,7 @@ const DashboardPage = () => {
             whileHover={{
               y: -4,
             }}
-            className="glass premium-shadow rounded-[2rem] border border-white/10 p-5 sm:p-6"
+            className="soft-card soft-card-hover p-5 sm:p-6"
           >
             <p className="text-sm text-muted-foreground">{item.title}</p>
 

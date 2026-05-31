@@ -12,8 +12,6 @@ import { updateOrderStatus } from "../services/order.service";
 const AdminOrdersPage = () => {
   const { orders } = useOrders();
 
-  console.log({ orders });
-
   const handleStatusChange = async (orderId, status) => {
     try {
       await updateOrderStatus(orderId, status);
@@ -24,14 +22,14 @@ const AdminOrdersPage = () => {
 
   return (
     <div className="space-y-6 p-4 sm:p-6 lg:p-8">
-      <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
+      <h1 className="page-title">
         Manage Orders
       </h1>
 
       {orders.map((order) => (
         <div
           key={order.id}
-          className="glass premium-shadow space-y-5 rounded-[2rem] border border-white/10 p-5 sm:p-6"
+          className="soft-card space-y-5 p-5 sm:p-6"
         >
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div className="space-y-2">
@@ -82,7 +80,7 @@ const AdminOrdersPage = () => {
               value={order.status}
               onValueChange={(value) => handleStatusChange(order.id, value)}
             >
-              <SelectTrigger className="h-12 min-h-12 w-full rounded-2xl border-white/10 bg-background/50 lg:w-56">
+              <SelectTrigger className="h-12 min-h-12 w-full rounded-xl border-border/70 bg-background/70 lg:w-56">
                 <SelectValue />
               </SelectTrigger>
 
@@ -110,7 +108,7 @@ const AdminOrdersPage = () => {
             {order.items.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center gap-4 rounded-2xl border border-white/10 bg-background/30 p-3"
+                className="flex items-center gap-4 rounded-xl border border-border/70 bg-background/60 p-3"
               >
                 <img
                   src={item.image}

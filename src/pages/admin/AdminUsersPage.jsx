@@ -41,7 +41,7 @@ const AdminUsersPage = () => {
   return (
     <div className="space-y-6 p-4 sm:p-6 lg:p-8">
       <div>
-        <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
+        <h1 className="page-title">
           Users Management
         </h1>
 
@@ -51,11 +51,11 @@ const AdminUsersPage = () => {
         {users.map((user) => (
           <div
             key={user.id}
-            className="glass premium-shadow rounded-[2rem] border border-white/10 p-5"
+            className="soft-card p-5"
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-4">
-                <div className="glass flex h-12 w-12 items-center justify-center rounded-full text-lg font-black">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-lg font-black text-primary">
                   {user.name?.charAt(0)?.toUpperCase() || "U"}
                 </div>
 
@@ -82,7 +82,7 @@ const AdminUsersPage = () => {
                   await handleRoleChange(user.id, value);
                 }}
               >
-                <SelectTrigger className="h-12 min-h-12 rounded-2xl border-white/10 bg-background/50">
+                <SelectTrigger className="h-12 min-h-12 rounded-xl border-border/70 bg-background/70">
                   <SelectValue />
                 </SelectTrigger>
 
@@ -96,7 +96,7 @@ const AdminUsersPage = () => {
           </div>
         ))}
       </div>
-      <div className="hidden overflow-x-auto rounded-[2rem] border border-white/10 lg:block">
+      <div className="hidden overflow-x-auto rounded-2xl border border-border/70 bg-card lg:block">
         <table className="min-w-[700px] w-full">
           <thead className="border-b bg-muted/50">
             <tr>
@@ -134,7 +134,7 @@ const AdminUsersPage = () => {
                       await handleRoleChange(user.id, value);
                     }}
                   >
-                    <SelectTrigger className="h-11 min-h-11 w-full min-w-[140px] rounded-2xl border-white/10 bg-background/50">
+                    <SelectTrigger className="h-11 min-h-11 w-full min-w-[140px] rounded-xl border-border/70 bg-background/70">
                       <SelectValue />
                     </SelectTrigger>
 

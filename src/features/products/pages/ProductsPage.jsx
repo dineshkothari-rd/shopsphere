@@ -99,19 +99,16 @@ const ProductsPage = () => {
   };
 
   return (
-    <section className="relative overflow-hidden py-8 sm:py-10">
-      <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-
-      <div className="absolute right-0 top-40 h-72 w-72 rounded-full bg-purple-500/10 blur-3xl" />
+    <section className="page-shell">
       <Container className="relative space-y-8">
-        <div className="space-y-3">
-          <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+        <div className="space-y-4">
+          <div className="eyebrow">
             Explore Products
           </div>
 
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <h1 className="text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+              <h1 className="page-title">
                 Discover Products
               </h1>
 
@@ -120,14 +117,14 @@ const ProductsPage = () => {
               </p>
             </div>
 
-            <div className="glass w-full rounded-2xl px-5 py-4 sm:w-max">
+            <div className="app-surface w-full rounded-2xl px-5 py-4 sm:w-max">
               <p className="text-sm text-muted-foreground">Total Products</p>
 
               <h2 className="text-3xl font-black">{filteredProducts.length}</h2>
             </div>
           </div>
         </div>
-        <div className="glass premium-shadow sticky top-[88px] z-20 rounded-[2rem] border border-white/10 p-4">
+        <div className="app-surface sticky top-20 z-20 rounded-2xl p-3 sm:p-4">
           {/* mobile */}
           <div className="space-y-4 lg:hidden">
             <div className="relative">
@@ -137,7 +134,7 @@ const ProductsPage = () => {
                 placeholder="Search products..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="h-12 rounded-2xl border-white/10 bg-background/50 pl-12"
+                className="h-12 rounded-xl border-border/70 bg-background/70 pl-12"
               />
             </div>
 
@@ -152,7 +149,7 @@ const ProductsPage = () => {
 
                 <SheetContent
                   onOpenAutoFocus={(e) => e.preventDefault()}
-                  className="glass w-full border-l border-white/10 bg-background/95 px-5 py-8 sm:max-w-md"
+                  className="w-full border-l border-border/70 bg-card px-5 py-8 sm:max-w-md"
                 >
                   <div className="flex h-full flex-col overflow-y-auto">
                     <div className="mb-8">
@@ -173,13 +170,13 @@ const ProductsPage = () => {
                           value={tempCategory}
                           onValueChange={setTempCategory}
                         >
-                          <SelectTrigger className="h-14 min-h-14 w-full rounded-2xl border border-white/10 bg-background/60 px-4 text-left text-base shadow-sm backdrop-blur-xl">
+                          <SelectTrigger className="h-14 min-h-14 w-full rounded-xl border border-border/70 bg-background/70 px-4 text-left text-base shadow-sm">
                             <SelectValue placeholder="Category" />
                           </SelectTrigger>
 
                           <SelectContent
                             position="popper"
-                            className="z-9999 rounded-2xl border border-white/10 bg-background/95 backdrop-blur-xl"
+                            className="z-9999 rounded-xl border border-border/70 bg-card"
                           >
                             <SelectItem
                               value="all"
@@ -210,13 +207,13 @@ const ProductsPage = () => {
                           value={tempPriceRange}
                           onValueChange={setTempPriceRange}
                         >
-                          <SelectTrigger className="h-14 min-h-14 w-full rounded-2xl border border-white/10 bg-background/60 px-4 text-left text-base shadow-sm backdrop-blur-xl">
+                          <SelectTrigger className="h-14 min-h-14 w-full rounded-xl border border-border/70 bg-background/70 px-4 text-left text-base shadow-sm">
                             <SelectValue placeholder="Price Range" />
                           </SelectTrigger>
 
                           <SelectContent
                             position="popper"
-                            className="z-9999 rounded-2xl border border-white/10 bg-background/95 backdrop-blur-xl"
+                            className="z-9999 rounded-xl border border-border/70 bg-card"
                           >
                             <SelectItem
                               value="all"
@@ -255,13 +252,13 @@ const ProductsPage = () => {
                         </label>
 
                         <Select value={tempSort} onValueChange={setTempSort}>
-                          <SelectTrigger className="h-14 min-h-14 w-full rounded-2xl border border-white/10 bg-background/60 px-4 text-left text-base shadow-sm backdrop-blur-xl">
+                          <SelectTrigger className="h-14 min-h-14 w-full rounded-xl border border-border/70 bg-background/70 px-4 text-left text-base shadow-sm">
                             <SelectValue placeholder="Sort By" />
                           </SelectTrigger>
 
                           <SelectContent
                             position="popper"
-                            className="z-9999 rounded-2xl border border-white/10 bg-background/95 backdrop-blur-xl"
+                            className="z-9999 rounded-xl border border-border/70 bg-card"
                           >
                             <SelectItem
                               value="low"
@@ -282,7 +279,7 @@ const ProductsPage = () => {
 
                       <div className="flex gap-3 pt-4">
                         <Button
-                          className="h-12 flex-1 rounded-2xl"
+                          className="h-12 flex-1 rounded-xl"
                           onClick={() => {
                             setCategory(tempCategory);
 
@@ -298,7 +295,7 @@ const ProductsPage = () => {
 
                         <Button
                           variant="outline"
-                          className="h-12 rounded-2xl border-white/10 px-5"
+                          className="h-12 rounded-xl border-border/70 px-5"
                           onClick={resetFilters}
                         >
                           Clear
@@ -311,7 +308,7 @@ const ProductsPage = () => {
 
               <Button
                 variant="outline"
-                className="h-12 rounded-2xl border-white/10 px-5"
+                className="h-12 rounded-xl border-border/70 px-5"
                 onClick={() => {
                   setSearch("");
                   setCategory("all");
@@ -333,12 +330,12 @@ const ProductsPage = () => {
                 placeholder="Search premium products..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="h-12 rounded-2xl border-white/10 bg-background/50 pl-12"
+                className="h-12 rounded-xl border-border/70 bg-background/70 pl-12"
               />
             </div>
 
             <Select value={category} onValueChange={setCategory}>
-              <SelectTrigger className="h-12 min-h-12 w-[180px] rounded-2xl border-white/10 bg-background/50">
+              <SelectTrigger className="h-12 min-h-12 w-[180px] rounded-xl border-border/70 bg-background/70">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
 
@@ -360,7 +357,7 @@ const ProductsPage = () => {
             </Select>
 
             <Select value={priceRange} onValueChange={setPriceRange}>
-              <SelectTrigger className="h-12 min-h-12 w-[180px] rounded-2xl border-white/10 bg-background/50">
+              <SelectTrigger className="h-12 min-h-12 w-[180px] rounded-xl border-border/70 bg-background/70">
                 <SelectValue placeholder="Price" />
               </SelectTrigger>
 
@@ -393,7 +390,7 @@ const ProductsPage = () => {
             </Select>
 
             <Select value={sort} onValueChange={setSort}>
-              <SelectTrigger className="h-12 min-h-12 w-[180px] rounded-2xl border-white/10 bg-background/50">
+              <SelectTrigger className="h-12 min-h-12 w-[180px] rounded-xl border-border/70 bg-background/70">
                 <SelectValue placeholder="Sort" />
               </SelectTrigger>
 
@@ -410,7 +407,7 @@ const ProductsPage = () => {
 
             <Button
               variant="outline"
-              className="h-12 rounded-2xl border-white/10 px-5"
+              className="h-12 rounded-xl border-border/70 px-5"
               onClick={resetFilters}
             >
               <X className="mr-2 h-4 w-4" />
@@ -448,7 +445,7 @@ const ProductsPage = () => {
               ))}
         </motion.div>
         {!loading && filteredProducts.length === 0 && (
-          <div className="glass premium-shadow rounded-[2rem] border border-white/10 p-8 text-center sm:p-16">
+          <div className="app-surface rounded-2xl p-8 text-center sm:p-16">
             <h2 className="text-2xl font-black sm:text-3xl">
               No Products Found
             </h2>

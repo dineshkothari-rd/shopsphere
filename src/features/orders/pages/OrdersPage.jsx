@@ -78,17 +78,14 @@ const OrdersPage = () => {
   };
 
   return (
-    <section className="relative overflow-hidden py-8 sm:py-10">
-      <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-
-      <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-purple-500/10 blur-3xl" />
-      <Container className="relative space-y-6">
-        <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
+    <section className="page-shell">
+      <Container className="space-y-6">
+        <h1 className="page-title">
           My Orders
         </h1>
 
         {orders.length === 0 ? (
-          <div className="glass premium-shadow rounded-[2rem] border border-white/10 p-10 text-center">
+          <div className="app-surface rounded-2xl p-10 text-center">
             <h2 className="text-2xl font-black">No Orders Found</h2>
 
             <p className="mt-3 text-muted-foreground">
@@ -106,7 +103,7 @@ const OrdersPage = () => {
             return (
               <div
                 key={order.id}
-                className="glass premium-shadow space-y-6 rounded-[2rem] border border-white/10 p-5 sm:p-6"
+                className="app-surface space-y-6 rounded-2xl p-5 sm:p-6"
               >
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div>
@@ -147,7 +144,7 @@ const OrdersPage = () => {
                           className={`rounded-2xl border p-3 text-sm capitalize ${
                             isActive
                               ? "border-primary/30 bg-primary/10 text-primary"
-                              : "border-white/10 bg-background/30 text-muted-foreground"
+                              : "border-border/70 bg-background/60 text-muted-foreground"
                           }`}
                         >
                           {step}
@@ -161,7 +158,7 @@ const OrdersPage = () => {
                   {order.items.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center gap-4 rounded-2xl border border-white/10 bg-background/30 p-3"
+                      className="flex items-center gap-4 rounded-xl border border-border/70 bg-background/60 p-3"
                     >
                       <img
                         src={item.image || item.images?.[0]}

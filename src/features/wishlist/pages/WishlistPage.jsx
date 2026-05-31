@@ -23,12 +23,8 @@ const WishlistPage = () => {
   }));
 
   return (
-    <section className="relative overflow-hidden py-8 sm:py-10">
-      <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-
-      <div className="absolute right-0 top-24 h-72 w-72 rounded-full bg-purple-500/10 blur-3xl" />
-
-      <Container className="relative space-y-8">
+    <section className="page-shell">
+      <Container className="space-y-8">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div className="space-y-3">
             <div className="inline-flex w-max rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
@@ -46,7 +42,7 @@ const WishlistPage = () => {
             </div>
           </div>
 
-          <div className="glass w-full rounded-2xl px-5 py-4 sm:w-max">
+          <div className="app-surface w-full rounded-2xl px-5 py-4 sm:w-max">
             <p className="text-sm text-muted-foreground">Saved Products</p>
 
             <h2 className="text-3xl font-black">{wishlistProducts.length}</h2>
@@ -54,11 +50,11 @@ const WishlistPage = () => {
         </div>
 
         {loading ? (
-          <div className="glass premium-shadow rounded-[2rem] border border-white/10 p-12 text-center">
+          <div className="app-surface rounded-2xl p-12 text-center">
             <h2 className="text-2xl font-black">Loading wishlist...</h2>
           </div>
         ) : !wishlistProducts.length ? (
-          <div className="glass premium-shadow rounded-[2rem] border border-white/10 p-10 text-center sm:p-16">
+          <div className="app-surface rounded-2xl p-10 text-center sm:p-16">
             <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-primary/10 text-primary">
               <Heart className="h-10 w-10" />
             </div>

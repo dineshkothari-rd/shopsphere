@@ -11,7 +11,7 @@ import {
   addToWishlist,
   removeFromWishlist,
 } from "@/features/wishlist/services/wishlist.service";
-import { Heart, Eye } from "lucide-react";
+import { Heart, Eye, ShoppingBag } from "lucide-react";
 import { motion } from "framer-motion";
 
 import ProductQuickView from "@/features/products/components/ProductQuickView";
@@ -95,10 +95,10 @@ const ProductCard = ({ product }) => {
           duration: 0.25,
         }}
       >
-        <Card className="glass premium-shadow overflow-hidden rounded-[1.5rem] border border-white/10 transition-all duration-300">
+        <Card className="soft-card soft-card-hover overflow-hidden rounded-2xl">
           <Link to={`/products/${productId}`}>
             <div className="relative aspect-[4/4.2] overflow-hidden bg-muted sm:aspect-square">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+              <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
               <div className="absolute left-3 top-3 z-10 flex flex-wrap gap-2">
                 {discountPercentage > 0 && (
                   <span className="rounded-full bg-red-500 px-3 py-1 text-xs font-bold text-white shadow-lg">
@@ -137,11 +137,11 @@ const ProductCard = ({ product }) => {
                   e.preventDefault();
                   handleWishlist();
                 }}
-                className="absolute right-3 top-3 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-white/20 bg-black/50 shadow-lg backdrop-blur-xl transition hover:scale-105 hover:bg-black/70"
+                className="absolute right-3 top-3 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/90 text-slate-950 shadow-lg backdrop-blur-xl transition hover:scale-105 hover:bg-white"
               >
                 <Heart
                   className={`h-5 w-5 ${
-                    isWishlisted ? "fill-red-500 text-red-500" : " text-white"
+                    isWishlisted ? "fill-red-500 text-red-500" : "text-slate-950"
                   }`}
                 />
               </Button>
@@ -153,13 +153,13 @@ const ProductCard = ({ product }) => {
 
                   setOpenQuickView(true);
                 }}
-                className="absolute bottom-3 right-3 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-white/20 bg-black/50 shadow-lg backdrop-blur-xl transition hover:scale-105 hover:bg-black/70"
+                className="absolute bottom-3 right-3 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/90 text-slate-950 shadow-lg backdrop-blur-xl transition hover:scale-105 hover:bg-white"
               >
-                <Eye className="h-5 w-5 text-white" />
+                <Eye className="h-5 w-5" />
               </Button>
             </div>
 
-            <CardContent className="space-y-3 p-3 sm:p-4">
+            <CardContent className="space-y-3 p-4">
               <div>
                 <h2 className="line-clamp-1 text-[15px] font-bold sm:text-base">
                   {product.title}
@@ -191,17 +191,17 @@ const ProductCard = ({ product }) => {
                   )}
                 </div>
 
-                <span className="truncate rounded-full border border-white/10 bg-secondary/60 px-3 py-1 text-xs backdrop-blur-xl">
+                <span className="max-w-[112px] truncate rounded-full border border-border/70 bg-secondary px-3 py-1 text-xs font-medium">
                   {product.category}
                 </span>
               </div>
             </CardContent>
           </Link>
 
-          <div className="p-3 pt-0 sm:px-4 sm:pb-4">
+          <div className="p-4 pt-0">
             <Button
               disabled={adding || product.stock <= 0}
-              className="h-10 w-full rounded-xl text-sm font-semibold sm:h-11"
+              className="h-11 w-full rounded-xl text-sm font-semibold"
               onClick={() => {
                 setAdding(true);
 
@@ -216,6 +216,7 @@ const ProductCard = ({ product }) => {
                 }, 500);
               }}
             >
+              <ShoppingBag className="mr-2 h-4 w-4" />
               {product.stock <= 0 ? "Out Of Stock" : "Add To Cart"}
             </Button>
           </div>

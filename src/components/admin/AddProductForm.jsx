@@ -82,7 +82,7 @@ const AddProductForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 glass premium-shadow mx-auto max-w-3xl rounded-2xl border border-white/10 p-5 sm:p-8"
+      className="app-surface mx-auto max-w-3xl space-y-4 rounded-xl p-5 sm:p-8"
     >
       <Input
         placeholder="Product title"

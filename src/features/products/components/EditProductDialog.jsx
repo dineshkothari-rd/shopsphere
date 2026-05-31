@@ -79,7 +79,7 @@ const EditProductDialog = ({ open, onOpenChange, product, onSuccess }) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="glass max-h-[90vh] overflow-y-auto rounded-[2rem] border border-white/10 sm:max-w-2xl">
+      <DialogContent className="max-h-[90vh] overflow-y-auto rounded-2xl border border-border/70 bg-card sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-3xl font-black tracking-tight">
             Edit Product
@@ -92,7 +92,7 @@ const EditProductDialog = ({ open, onOpenChange, product, onSuccess }) => {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className="h-12 rounded-2xl border-white/10 bg-background/50"
+            className="h-12 rounded-xl border-border/70 bg-background/70"
           />
 
           <Input
@@ -100,7 +100,7 @@ const EditProductDialog = ({ open, onOpenChange, product, onSuccess }) => {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            className="h-12 rounded-2xl border-white/10 bg-background/50"
+            className="h-12 rounded-xl border-border/70 bg-background/70"
           />
 
           <Input
@@ -109,7 +109,7 @@ const EditProductDialog = ({ open, onOpenChange, product, onSuccess }) => {
             name="price"
             value={formData.price}
             onChange={handleChange}
-            className="h-12 rounded-2xl border-white/10 bg-background/50"
+            className="h-12 rounded-xl border-border/70 bg-background/70"
           />
 
           <Input
@@ -117,7 +117,7 @@ const EditProductDialog = ({ open, onOpenChange, product, onSuccess }) => {
             name="category"
             value={formData.category}
             onChange={handleChange}
-            className="h-12 rounded-2xl border-white/10 bg-background/50"
+            className="h-12 rounded-xl border-border/70 bg-background/70"
           />
 
           <Input
@@ -126,7 +126,7 @@ const EditProductDialog = ({ open, onOpenChange, product, onSuccess }) => {
             name="stock"
             value={formData.stock}
             onChange={handleChange}
-            className="h-12 rounded-2xl border-white/10 bg-background/50"
+            className="h-12 rounded-xl border-border/70 bg-background/70"
           />
 
           {formData.image && (

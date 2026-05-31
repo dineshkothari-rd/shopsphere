@@ -55,10 +55,17 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-6 rounded-3xl border bg-card p-8 shadow-sm">
+    <div className="grid min-h-screen place-items-center p-4">
+      <div className="w-full max-w-md space-y-6 rounded-3xl border border-border/70 bg-card/95 p-5 shadow-xl backdrop-blur sm:p-8">
         <div className="space-y-2 text-center">
-          <h1 className="text-3xl font-bold">Create Account</h1>
+          <Link
+            to="/"
+            className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-xl font-black text-primary-foreground"
+          >
+            S
+          </Link>
+
+          <h1 className="text-3xl font-black tracking-tight">Create Account</h1>
 
           <p className="text-muted-foreground">Start your ecommerce journey</p>
         </div>
@@ -70,6 +77,7 @@ const RegisterPage = () => {
             placeholder="Enter email"
             value={formData.email}
             onChange={handleChange}
+            className="h-12 rounded-xl"
           />
 
           <Input
@@ -78,16 +86,17 @@ const RegisterPage = () => {
             placeholder="Enter password"
             value={formData.password}
             onChange={handleChange}
+            className="h-12 rounded-xl"
           />
 
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="h-12 w-full rounded-xl" disabled={loading}>
             {loading ? "Creating account..." : "Create Account"}
           </Button>
         </form>
 
         <Button
           variant="outline"
-          className="w-full"
+          className="h-12 w-full rounded-xl"
           onClick={handleGoogleSignup}
         >
           Continue with Google

@@ -117,7 +117,7 @@ const ProductForm = ({
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="h-12 rounded-2xl border-white/10 bg-background/50"
+              className="h-12 rounded-xl border-border/70 bg-background/70"
             />
           </div>
 
@@ -129,7 +129,7 @@ const ProductForm = ({
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="h-12 rounded-2xl border-white/10 bg-background/50"
+              className="h-12 rounded-xl border-border/70 bg-background/70"
             />
           </div>
 
@@ -143,7 +143,7 @@ const ProductForm = ({
                 name="price"
                 value={formData.price}
                 onChange={handleChange}
-                className="h-12 rounded-2xl border-white/10 bg-background/50"
+                className="h-12 rounded-xl border-border/70 bg-background/70"
               />
             </div>
 
@@ -156,7 +156,7 @@ const ProductForm = ({
                 name="stock"
                 value={formData.stock}
                 onChange={handleChange}
-                className="h-12 rounded-2xl border-white/10 bg-background/50"
+                className="h-12 rounded-xl border-border/70 bg-background/70"
               />
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -169,12 +169,12 @@ const ProductForm = ({
                   name="comparePrice"
                   value={formData.comparePrice}
                   onChange={handleChange}
-                  className="h-12 rounded-2xl border-white/10 bg-background/50"
+                  className="h-12 rounded-xl border-border/70 bg-background/70"
                 />
               </div>
 
               <div className="flex items-end gap-3 pb-1">
-                <label className="flex items-center gap-3 w-max rounded-2xl border border-white/10 px-4 py-3">
+                <label className="flex items-center gap-3 w-max rounded-xl border border-border/70 px-4 py-3">
                   <input
                     type="checkbox"
                     checked={formData.isNew}
@@ -189,7 +189,7 @@ const ProductForm = ({
                   <span className="text-sm font-medium">New Product</span>
                 </label>
 
-                <label className="flex items-center gap-3 w-max rounded-2xl border border-white/10 px-4 py-3">
+                <label className="flex items-center gap-3 w-max rounded-xl border border-border/70 px-4 py-3">
                   <input
                     type="checkbox"
                     checked={formData.isTrending}
@@ -218,7 +218,7 @@ const ProductForm = ({
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="h-12 rounded-2xl border-white/10 bg-background/50 pl-11"
+                className="h-12 rounded-xl border-border/70 bg-background/70 pl-11"
               />
             </div>
           </div>
@@ -240,7 +240,7 @@ const ProductForm = ({
             </div>
           </div>
 
-          <label className="glass flex cursor-pointer flex-col items-center justify-center gap-3 rounded-[2rem] border border-dashed border-white/10 p-8 text-center transition hover:border-primary/30 hover:bg-primary/5">
+          <label className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border/70 bg-background/60 p-8 text-center transition hover:border-primary/30 hover:bg-primary/5">
             <ImagePlus className="h-10 w-10 text-muted-foreground" />
 
             <div>
@@ -269,7 +269,7 @@ const ProductForm = ({
                   <div
                     key={index}
                     onClick={() => setPreviewImage(image)}
-                    className="group relative h-40 w-40 flex-shrink-0 cursor-pointer overflow-hidden rounded-[2rem] border border-white/10"
+                    className="group relative h-40 w-40 flex-shrink-0 cursor-pointer overflow-hidden rounded-2xl border border-border/70"
                   >
                     <img
                       src={image}
@@ -314,7 +314,7 @@ const ProductForm = ({
                 key={index}
                 src={image}
                 alt={`preview-${index}`}
-                className="max-h-[85vh] min-w-full rounded-[2rem] object-contain"
+                className="max-h-[85vh] min-w-full rounded-2xl object-contain"
               />
             ))}
           </div>

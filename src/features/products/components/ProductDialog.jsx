@@ -59,13 +59,13 @@ const ProductDialog = ({ mode = "create", product = null }) => {
         {isEdit ? (
           <Button
             variant="outline"
-            className="h-11 rounded-2xl border-white/10"
+            className="h-11 rounded-xl border-border/70"
           >
             <Pencil className="mr-2 h-4 w-4" />
             Edit
           </Button>
         ) : (
-          <Button className="h-12 rounded-2xl">
+          <Button className="h-12 rounded-xl">
             <Plus className="mr-2 h-5 w-5" />
             Add Product
           </Button>
@@ -74,7 +74,7 @@ const ProductDialog = ({ mode = "create", product = null }) => {
 
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
-        className="glass max-h-[100dvh] overflow-y-auto rounded-[2rem] border border-white/10 sm:max-w-2xl"
+        className="max-h-[100dvh] overflow-y-auto rounded-3xl border border-border/70 bg-card sm:max-w-2xl"
       >
         <DialogHeader>
           <DialogTitle className="text-3xl font-black tracking-tight">
